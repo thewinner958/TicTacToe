@@ -17,40 +17,44 @@ import java.util.Objects;
 
 public class Node {
 
-
     private final GameSetUp setUp;
 
-
     // If you add a getter, make sure you don't allow changes on the state
-
     private final char[][] state;
-
 
     private final Move originMove;
 
-
     private boolean isEvaluated = false;
-
 
     private Integer score = null;
 
-
     private List<Node> children = null;
-
-
-    // TODO Validate input state against dimensions and possible symbols
 
     public Node(GameSetUp setUp, char[][] state, Move originMove) {
 
         this.setUp = setUp;
 
+        //Validates the dimensions of the state
+        if (setUp.getDimension() != state.length || setUp.getDimension() != state[0].length) {
+            throw new RuntimeException("Invalid dimensions of the state array");
+        }
+
+        //Validates the characters in the state array
+        boolean contains = false;
+        for (char[] chars : state) {
+            for (char sym : chars) {
+                contains = sym == 'X' || sym == 'O' || sym == ' ';
+            }
+        }
+        if (!contains) {
+            throw new RuntimeException("There is either an empty or invalid character in the state array. The only characters that are allowed are 'X', 'O' and empty space (' ')");
+        }
 
         this.state = copyState(state);
 
         this.originMove = originMove;
 
     }
-
 
     public Node(Node parentNode, Move move) {
 
@@ -68,13 +72,11 @@ public class Node {
 
     }
 
-
     public Node move(Move move) {
 
         return new Node(this, move);
 
     }
-
 
     private static char[][] copyState(char[][] source) {
 
@@ -95,13 +97,11 @@ public class Node {
 
     }
 
-
     public GameSetUp getSetUp() {
 
         return setUp;
 
     }
-
 
     public boolean isPlayerX() {
 
@@ -115,13 +115,11 @@ public class Node {
 
     }
 
-
     public Move getOriginMove() {
 
         return originMove;
 
     }
-
 
     public List<Node> getChildren() {
 
@@ -142,7 +140,6 @@ public class Node {
         return this.children;
 
     }
-
 
     protected List<Move> possibleMoves() {
 
@@ -167,8 +164,7 @@ public class Node {
     }
 
 
-    // Calling this method would evaluate the node, if it was not done already
-
+    // Calling this method would evaluate the node if it was not done already
     public boolean isFinal() {
 
         return (getScore() != null);
@@ -176,8 +172,7 @@ public class Node {
     }
 
 
-    // Calling this method would evaluate the node, if it was not done already
-
+    // Calling this method would evaluate the node if it was not done already
     public Integer getScore() {
 
         if (!isEvaluated) {
@@ -307,7 +302,6 @@ public class Node {
 
     }
 
-
     /**
 
      * A functional interface to define possible traversal sequence
@@ -319,7 +313,6 @@ public class Node {
      * longer that the {@link GameSetUp#getCountToWin}
 
      */
-
     @FunctionalInterface
 
     interface WinnableSequence {
@@ -403,7 +396,7 @@ public class Node {
 
 //
 
-//        //check for win above main diagonal
+//        //check for win above the main diagonal
 
 //        for (int row = 0; row < setUp.getDimension(); row++) {
 
@@ -572,9 +565,7 @@ public class Node {
 
     }
 
-
     @Override
-
     public boolean equals(Object other) {
 
         if (this == other) return true;
@@ -588,9 +579,7 @@ public class Node {
 
     }
 
-
     @Override
-
     public int hashCode() {
 
         return 31 * Objects.hash(isPlayerX())
@@ -600,4 +589,3 @@ public class Node {
     }
 
 }
-
