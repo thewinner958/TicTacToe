@@ -4,14 +4,10 @@ import net.jcip.annotations.Immutable;
 
 @Immutable
 public class GameSetUp {
-
     private final char xPlayerSymbol;
     private final char opponentSymbol;
-
     private final char emptySymbol;
-
     private final int dimension;
-
     private final int countToWin;
 
     public GameSetUp() {
@@ -26,7 +22,6 @@ public class GameSetUp {
         this.xPlayerSymbol = xPlayerSymbol;
         this.opponentSymbol = opponentSymbol;
         this.emptySymbol = emptySymbol;
-
         this.dimension = dimension;
         this.countToWin = countToWin;
     }
