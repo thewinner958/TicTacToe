@@ -24,11 +24,11 @@ public class Node {
         if (setUp.getDimension() != state.length || setUp.getDimension() != state[0].length) {
             throw new RuntimeException("Invalid dimensions of the state array");
         }
-        //Validates the characters in the state array
+        //Validates the characters in the state array from the setUp variable
         boolean contains = false;
         for (char[] chars : state) {
             for (char sym : chars) {
-                contains = sym == 'X' || sym == 'O' || sym == ' ';
+                contains = sym == this.setUp.getXPlayerSymbol() || sym == this.setUp.getOpponentSymbol() || sym == this.setUp.getEmptySymbol();
             }
         }
         if (!contains) {
