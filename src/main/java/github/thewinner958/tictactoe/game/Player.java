@@ -8,9 +8,10 @@ public class Player {
     private final int wins;
     private final int loses;
 
-    public Player() {
+    //if the player plays against the computer
+    public Player(char opponentSymbol) {
         username = "Computer";
-        symbol = 'O';
+        symbol = opponentSymbol;
         wins = 0;
         loses = 0;
     }
