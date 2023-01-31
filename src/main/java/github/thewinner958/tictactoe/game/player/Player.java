@@ -4,6 +4,6 @@ import github.thewinner958.tictactoe.game.Move;
 import github.thewinner958.tictactoe.game.Node;
 
 public interface Player {
-    public String getName();
+    public String name();
     public Move getNextMove(Node state);
 }

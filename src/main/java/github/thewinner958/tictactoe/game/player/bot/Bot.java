@@ -15,7 +15,7 @@ public class Bot implements Player {
     }
 
     @Override
-    public String getName() {
+    public String name() {
         return "KAY/O in" + difficulty.toString() + " mode";
     }
 
