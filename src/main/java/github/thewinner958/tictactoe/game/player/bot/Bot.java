@@ -21,7 +21,10 @@ public class Bot implements Player {
 
     @Override
     public Move getNextMove(Node state) {
-        return null;
+        var bestMove = findBestMove(state, difficulty.getCheckMovesAhead(), state.isPlayerX());
+        System.out.printf("%s, to get %f score. \n", bestMove.key(), bestMove.value().floatValue());
+
+        return bestMove.key();
     }
 
     // TODO Our Bot considers that the opponent will play optimally and if they see "inevitable"
