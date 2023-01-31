@@ -32,10 +32,10 @@ public class Bot implements Player {
     //  Fix the Bot to try to prolong the game in hope the opponent will make a mistake
     private static Pair<Move, Number> findBestMove(Node currentState, int depth, boolean isMaxPlayer) {
         if (currentState.isFinal()) {
-            return new Pair<Move, Number>(currentState.getOriginMove(), currentState.getScore());
+            return new Pair<>(currentState.getOriginMove(), currentState.getScore());
         }
         if (depth == 0) {
-            return new Pair<Move, Number>(currentState.getOriginMove(), getEvaluation(currentState));
+            return new Pair<>(currentState.getOriginMove(), getEvaluation(currentState));
         }
 
         List<Node> children = currentState.getChildren();
@@ -46,7 +46,7 @@ public class Bot implements Player {
             Node child = children.get(i);
 
             // TODO For a bigger board this gets too slow, fix heuristic and implement alpha-beta pruning
-            Pair<Move, Number> bestMoveFromChild = new Pair<Move, Number>(
+            Pair<Move, Number> bestMoveFromChild = new Pair<>(
                     child.getOriginMove(), findBestMove(child, depth - 1, !isMaxPlayer).value());
             bestMove = greaterThan(bestMoveFromChild.value(), bestMove.value(), isMaxPlayer) ?
                     bestMoveFromChild : bestMove;
