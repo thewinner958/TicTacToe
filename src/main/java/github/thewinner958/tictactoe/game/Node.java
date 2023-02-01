@@ -18,6 +18,10 @@ public class Node {
     private Integer score = null;
     private List<Node> children = null;
 
+    private boolean moveValidator(Move move) {
+        return move.row() < 0 || move.row() >= setUp.getDimension() || move.column() < 0 || move.column() >= setUp.getDimension();
+    }
+
     public Node(GameSetUp setUp, char[][] state, Move originMove) {
         this.setUp = setUp;
         //Validates the dimensions of the state
@@ -35,6 +39,9 @@ public class Node {
             throw new RuntimeException("There is an invalid character that was used in the board. The only characters that are allowed are '" + this.setUp.getXPlayerSymbol() + "', '" + this.setUp.getOpponentSymbol() + "' and '" + this.setUp.getEmptySymbol() + "'.");
         }
         this.state = copyState(state);
+        if (originMove != null && moveValidator(originMove)) {
+            throw new RuntimeException("Invalid move.");
+        }
         this.originMove = originMove;
     }
 
@@ -42,8 +49,14 @@ public class Node {
         this.setUp = parentNode.setUp;
         this.state = copyState(parentNode.state);
         char symbol = move.isPlayerX() ? setUp.getXPlayerSymbol() : setUp.getOpponentSymbol();
-        this.state[move.row()][move.column()] = symbol;
-        this.originMove = move;
+        try {
+            this.state[move.row()][move.column()] = symbol;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Invalid move!");
+        }
+        finally {
+            this.originMove = move;
+        }
     }
 
     private static char[][] copyState(char[][] source) {

@@ -55,7 +55,7 @@ public class Bot implements Player {
     }
 
     // TODO : Write a better heuristic, but for now - the unknown is scary!
-    public static Float getEvaluation(Node currentState) {
+    public static float getEvaluation(Node currentState) {
         return (currentState.isPlayerX() ? -0.5f : 0.5f);
     }
 
