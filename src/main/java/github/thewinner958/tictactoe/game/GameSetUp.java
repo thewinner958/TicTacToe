@@ -19,6 +19,9 @@ public class GameSetUp {
     }
 
     public GameSetUp(char xPlayerSymbol, char opponentSymbol, char emptySymbol, int dimension, int countToWin) {
+        if (xPlayerSymbol == 0 || opponentSymbol == 0 || emptySymbol == 0) {
+            throw new RuntimeException("Illegal character was used, please use other symbol");
+        }
         this.xPlayerSymbol = xPlayerSymbol;
         this.opponentSymbol = opponentSymbol;
         this.emptySymbol = emptySymbol;

@@ -32,7 +32,7 @@ public class Node {
             }
         }
         if (!contains) {
-            throw new RuntimeException("There is either an empty or invalid character in the state array. The only characters that are allowed are 'X', 'O' and empty space (' ')");
+            throw new RuntimeException("There is an invalid character that was used in the board. The only characters that are allowed are '" + this.setUp.getXPlayerSymbol() + "', '" + this.setUp.getOpponentSymbol() + "' and '" + this.setUp.getEmptySymbol() + "'.");
         }
         this.state = copyState(state);
         this.originMove = originMove;
@@ -54,6 +54,17 @@ public class Node {
             System.arraycopy(source[column], 0, destination[column], 0, numberOfRows);
         }
         return destination;
+    }
+
+    public static Node empty(GameSetUp gameSetUp) {
+        int n = gameSetUp.getDimension();
+        char[][] emptyState = new char[n][n];
+
+        for (char[] row : emptyState) {
+            Arrays.fill(row, gameSetUp.getEmptySymbol());
+        }
+
+        return new Node(gameSetUp, emptyState, null);
     }
 
     public Node move(Move move) {
@@ -106,8 +117,8 @@ public class Node {
     // Calling this method would evaluate the node if it was not done already
     public Integer getScore() {
         if (!isEvaluated) {
-            Character winSymbol = findWin();
-            if (winSymbol != null) {
+            char winSymbol = findWin();
+            if (winSymbol != 0) {
                 this.score = (winSymbol == setUp.getXPlayerSymbol()) ? 1 : -1;
             } else if (possibleMoves().isEmpty()) {
                 this.score = 0;
@@ -119,7 +130,7 @@ public class Node {
         return this.score;
     }
 
-    protected Character findWin() {
+    protected char findWin() {
         char winSymbol;
         int countSame;
         int N = setUp.getDimension();
@@ -173,7 +184,7 @@ public class Node {
                 }
             }
         }
-        return null;
+        return 0;
     }
 
     @Override
@@ -187,226 +198,6 @@ public class Node {
         }
         return builder.toString();
     }
-
-
-//        // TODO Readable, but code repetition
-
-//        //check for row win
-
-//        for (int row = 0; row < setUp.getDimension(); row++) {
-
-//            winSymbol = this.state[row][0];
-
-//            countSame = 0;
-
-//            for (int column = 0; column < setUp.getDimension(); column++) {
-
-//                if (state[row][column] != setUp.getEmptySymbol() &&
-
-//                        state[row][column] == winSymbol) {
-
-//                    countSame = countSame + 1;
-
-//                } else {
-
-//                    winSymbol = state[row][column];
-
-//                    countSame = 1;
-
-//                }
-
-//                if (countSame == setUp.getCountToWin()) {
-
-//                    return winSymbol;
-
-//                }
-
-//            }
-
-//        }
-
-//
-
-//        //check for column win
-
-//        for (int column = 0; column < setUp.getDimension(); column++) {
-
-//            winSymbol = this.state[0][column];
-
-//            countSame = 0;
-
-//            for (int row = 0; row < setUp.getDimension(); row++) {
-
-//                if (state[row][column] != setUp.getEmptySymbol() &&
-
-//                        state[row][column] == winSymbol) {
-
-//                    countSame = countSame + 1;
-
-//                } else {
-
-//                    winSymbol = state[row][column];
-
-//                    countSame = 1;
-
-//                }
-
-//                if (countSame == setUp.getCountToWin()) {
-
-//                    return winSymbol;
-
-//                }
-
-//            }
-
-//        }
-
-//
-
-//        //check for win above the main diagonal
-
-//        for (int row = 0; row < setUp.getDimension(); row++) {
-
-//            winSymbol = this.state[row][0];
-
-//            countSame = 0;
-
-//            for (int i = 0; i < setUp.getDimension(); i++) {
-
-//                int ipp = (row + i) % setUp.getDimension()
-
-//;                if (state[ipp][ipp] != setUp.getEmptySymbol() &&
-
-//                        state[ipp][ipp] == winSymbol) {
-
-//                    countSame = countSame + 1;
-
-//                } else {
-
-//                    winSymbol = state[ipp][ipp];
-
-//                    countSame = 1;
-
-//                }
-
-//                if (countSame == setUp.getCountToWin()) {
-
-//                    return winSymbol;
-
-//                }
-
-//            }
-
-//        }
-
-//
-
-//        for (int row = 0; row < setUp.getDimension(); row++) {
-
-//            winSymbol = this.state[row][0];
-
-//            countSame = 0;
-
-//            for (int i = 0; i < setUp.getDimension(); i++) {
-
-//                int ipp = (setUp.getDimension() + row - i) % setUp.getDimension();
-
-//                if (state[ipp][ipp] != setUp.getEmptySymbol() &&
-
-//                        state[ipp][ipp] == winSymbol) {
-
-//                    countSame = countSame + 1;
-
-//                } else {
-
-//                    winSymbol = state[ipp][ipp];
-
-//                    countSame = 1;
-
-//                }
-
-//                if (countSame == setUp.getCountToWin()) {
-
-//                    return winSymbol;
-
-//                }
-
-//            }
-
-//        }
-
-//
-
-//        for (int row = setUp.getDimension()-1; row <= 0; row--) {
-
-//            winSymbol = this.state[row][0];
-
-//            countSame = 0;
-
-//            for (int i = 0; i < setUp.getDimension(); i++) {
-
-//                if (state[row + i][row + i] != setUp.getEmptySymbol() &&
-
-//                        state[row + i][row + i] == winSymbol) {
-
-//                    countSame = countSame + 1;
-
-//                } else {
-
-//                    winSymbol = state[row + i][row + i];
-
-//                    countSame = 1;
-
-//                }
-
-//                if (countSame == setUp.getCountToWin()) {
-
-//                    return winSymbol;
-
-//                }
-
-//            }
-
-//        }
-
-//
-
-//        for (int row = setUp.getDimension()-1; row <= 0; row--) {
-
-//            winSymbol = this.state[row][0];
-
-//            countSame = 0;
-
-//            for (int i = 0; i < setUp.getDimension(); i++) {
-
-//                if (state[row - i][row - i] != setUp.getEmptySymbol() &&
-
-//                        state[row - i][row - i] == winSymbol) {
-
-//                    countSame = countSame + 1;
-
-//                } else {
-
-//                    winSymbol = state[row - i][row - i];
-
-//                    countSame = 1;
-
-//                }
-
-//                if (countSame == setUp.getCountToWin()) {
-
-//                    return winSymbol;
-
-//                }
-
-//            }
-
-//        }
-
-
-//        return null;
-
-//    }
 
     @Override
     public boolean equals(Object other) {
