@@ -15,7 +15,6 @@ public class TicTacToeApplication {
         SpringApplication.run(TicTacToeApplication.class, args);
     }
 
-    final
-    Application application;
+    final Application application;
 
 }
