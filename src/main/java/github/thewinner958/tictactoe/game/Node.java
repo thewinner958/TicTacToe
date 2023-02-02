@@ -1,6 +1,7 @@
 package github.thewinner958.tictactoe.game;
 
 import net.jcip.annotations.Immutable;
+import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.Arrays;

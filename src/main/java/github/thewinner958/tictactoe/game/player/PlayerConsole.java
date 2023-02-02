@@ -2,9 +2,11 @@ package github.thewinner958.tictactoe.game.player;
 
 import github.thewinner958.tictactoe.game.Move;
 import github.thewinner958.tictactoe.game.Node;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component("consolePlayer")
 public record PlayerConsole(String name) implements Player {
 
     @Override

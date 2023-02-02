@@ -1,10 +1,13 @@
 package github.thewinner958.tictactoe.game;
 
 import github.thewinner958.tictactoe.game.player.Player;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-
+@Component
 public class Game {
     private Node state;
     private Player player1;
@@ -31,14 +34,19 @@ public class Game {
         this(new Node(new GameSetUp(state.length, state.length), state, null));
     }
 
+    @Autowired
     public Game(GameSetUp setUp, char[][] state) {
         this(new Node(setUp, state, null));
     }
 
+    @Autowired
+    @Qualifier("consolePlayer")
     public void setPlayer1(Player player1) {
         this.player1 = player1;
     }
 
+    @Autowired
+    @Qualifier("bot")
     public void setPlayer2(Player player2) {
         this.player2 = player2;
     }
@@ -54,7 +62,7 @@ public class Game {
             return;
         }
         // Player 1 always starts first.
-        Player whoseTurn = player1;
+        Player whoseTurn = state.isPlayerX() ? player1 : player2;
         int movesLeft = moves;
 
         while (!state.isFinal() && movesLeft != 0) {
