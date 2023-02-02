@@ -1,6 +1,5 @@
-package github.thewinner958.tictactoe;
+package github.thewinner958.tictactoe.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

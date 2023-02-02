@@ -1,4 +1,4 @@
-package github.thewinner958.tictactoe;
+package github.thewinner958.tictactoe.web;
 
 import github.thewinner958.tictactoe.game.Game;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,9 @@
-package github.thewinner958.tictactoe;
+package github.thewinner958.tictactoe.web;
 
+import github.thewinner958.tictactoe.game.Game;
 import github.thewinner958.tictactoe.game.GameSetUp;
 import github.thewinner958.tictactoe.game.player.Player;
+import github.thewinner958.tictactoe.game.player.PlayerConsole;
 import github.thewinner958.tictactoe.game.player.bot.Bot;
 import github.thewinner958.tictactoe.game.player.bot.BotDifficulty;
 import org.springframework.context.annotation.Bean;
@@ -9,10 +11,18 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
-
+    @Bean
+    public Game getGame() {
+        return new Game(getGameConfig(), getStartingState());
+    }
     @Bean("difficulty")
     public BotDifficulty getDifficulty() {
         return BotDifficulty.HARD;
+    }
+
+    @Bean
+    public Player getConsole() {
+        return new PlayerConsole(getPlayerName());
     }
 
     @Bean("name")
@@ -33,8 +43,8 @@ public class AppConfig {
     @Bean
     public char[][] getStartingState() {
         return new char[][]{
-                {'O', '_', '_'},
-                {'_', 'X', 'O'},
-                {'_', 'O', '_'}};
+                {'_', '_', '_'},
+                {'_', '_', '_'},
+                {'_', '_', '_'}};
     }
 }
