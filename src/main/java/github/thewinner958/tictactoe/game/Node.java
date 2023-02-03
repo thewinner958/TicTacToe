@@ -82,6 +82,10 @@ public class Node {
     }
 
     public Node move(Move move) {
+        if (state[move.row()][move.column()] != setUp.getEmptySymbol()) {
+            System.out.println("You can't place it on already used space");
+            return null;
+        }
         return new Node(this, move);
     }
 

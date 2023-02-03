@@ -67,9 +67,12 @@ public class Game {
 
         while (!state.isFinal() && movesLeft != 0) {
             Move move = whoseTurn.getNextMove(this.state);
-            this.move(move);
+            try {
+                this.move(move);
+            } catch (RuntimeException e) {
+                continue;
+            }
             System.out.printf("%s made a move: %s \n", whoseTurn.name(), move.toString());
-
             whoseTurn = (whoseTurn == player1) ? player2 : player1;
             movesLeft--;
         }
@@ -90,6 +93,9 @@ public class Game {
     }
 
     public void move(Move move) {
+        if (this.state.move(move) == null) {
+            throw new RuntimeException();
+        }
         this.state = this.state.move(move);
     }
 

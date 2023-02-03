@@ -6,21 +6,25 @@ import github.thewinner958.tictactoe.game.player.Player;
 import github.thewinner958.tictactoe.game.player.PlayerConsole;
 import github.thewinner958.tictactoe.game.player.bot.Bot;
 import github.thewinner958.tictactoe.game.player.bot.BotDifficulty;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
     @Bean
-    public Game getGame() {
-        return new Game(getGameConfig(), getStartingState());
+    public Game startGame(@Qualifier("consolePlayer") Player player1,@Qualifier("bot") Player player2) {
+        Game game = new Game(getGameConfig(), getStartingState());
+        game.setPlayer1(player1);
+        game.setPlayer2(player2);
+        return game;
     }
     @Bean("difficulty")
     public BotDifficulty getDifficulty() {
         return BotDifficulty.HARD;
     }
 
-    @Bean
+    @Bean("consolePlayer")
     public Player getConsole() {
         return new PlayerConsole(getPlayerName());
     }
