@@ -95,9 +95,6 @@ public class Game {
     }
 
     public void move(Move move) throws IllegalMoveException {
-        if (this.state.move(move) == null) {
-            throw new IllegalMoveException("You can't place it on already used space!");
-        }
         this.state = this.state.move(move);
     }
 
