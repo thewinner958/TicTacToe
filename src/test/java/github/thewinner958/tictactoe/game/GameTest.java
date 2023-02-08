@@ -1,5 +1,6 @@
 package github.thewinner958.tictactoe.game;
 
+import github.thewinner958.tictactoe.exceptions.IllegalMoveException;
 import github.thewinner958.tictactoe.game.player.bot.Bot;
 import github.thewinner958.tictactoe.game.player.bot.BotDifficulty;
 import org.junit.jupiter.api.Test;
@@ -7,15 +8,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
+// FIXME: 08/02/2023
 public class GameTest {
-    @Test
-    public void testEasyBotFindsWin() {
+    @Test //FIXED
+    public void testEasyBotFindsWin() throws IllegalMoveException {
         char[][] state =
                 {{'_', '_', 'X'},
                         {'O', 'X', 'O'},
                         {'X', '_', '_'}};
 
-        Move originMove = new Move(0, 2, true);
+        Move originMove = new Move(1, 3, true);
 
         Bot bot = new Bot(BotDifficulty.EASY);
         Move move = bot.getNextMove(new Node(new GameSetUp(), state, originMove));
@@ -42,12 +44,12 @@ public class GameTest {
         game.setPlayer1(hard);
         game.setPlayer2(hard);
 
-        game.play(-1);
+        game.play(0);
 
         assertEquals(0.0f, game.getFinalScore().get().floatValue());
     }
 
-    //TODO : Split in multiple tests
+    //TODO: Split in multiple tests
     @Test
     public void testFindBestMove() {
         Game game = new Game();
@@ -55,7 +57,7 @@ public class GameTest {
         game.setPlayer1(expert);
         game.setPlayer2(expert);
 
-        game.play(1);
+        game.play(2);
         Move move = game.getState().getOriginMove();
         assertEquals(new Move(0, 0, true), move);
         assertSame('X', game.getState().toString().charAt(0));

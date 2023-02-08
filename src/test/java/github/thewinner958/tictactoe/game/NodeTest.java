@@ -1,5 +1,6 @@
 package github.thewinner958.tictactoe.game;
 
+import github.thewinner958.tictactoe.exceptions.IllegalMoveException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,40 +28,41 @@ public class NodeTest {
         startNode = new Node(new GameSetUp(4, 3), this.startState, null);
     }
 
-
+    // FIXME: 08/02/2023 Fix this test
     @Test
-    public void testWinRowColumn() {
-//        assertSame('O', startNode.findWin());
+    public void testWinRowColumn() throws IllegalMoveException {
+        char Null = 0;
+        //assertSame('O', startNode.findWin());
 
-        assertSame(null, startNode.findWin());
+        assertSame(Null, startNode.findWin());
 
-        Node node = startNode.move(new Move(3, 2, true));
+        Node node = startNode.move(new Move(4, 3, true));
 
-        assertSame(null, node.findWin());
+        assertSame(Null, node.findWin());
 
-        node = node.move(new Move(1, 0, true));
+        node = node.move(new Move(2, 1, true));
         assertSame('X', node.findWin());
 
-        node = node.move(new Move(0, 0, false));
-        assertSame(null, node.findWin());
+        node = node.move(new Move(1, 1, false));
+        assertSame(Null, node.findWin());
 
-        node = node.move(new Move(0, 1, false));
+        node = node.move(new Move(1, 2, false));
         System.out.println(node);
         assertSame('O', node.findWin());
 
-        node = node.move(new Move(1, 1, true));
+        node = node.move(new Move(2, 2, true));
         assertSame('X', node.findWin());
     }
 
     @Test
-    public void testPossitions() {
+    public void testPositions() {
         List<Move> moves = startNode.possibleMoves();
         assertSame(4, moves.size());
 
-        assertThat(moves, contains(new Move(0, 1, true),
-                new Move(2, 2, true),
-                new Move(3, 2, true),
-                new Move(3, 3, true)));
+        assertThat(moves, contains(new Move(1, 2, true),
+                new Move(3, 3, true),
+                new Move(4, 3, true),
+                new Move(4, 4, true)));
     }
 
     @Test
@@ -75,8 +77,8 @@ public class NodeTest {
 
     // Tests immutability
     @Test
-    public void testMoveImmutability() {
-        Move move = new Move(0, 1, true);
+    public void testMoveImmutability() throws IllegalMoveException {
+        Move move = new Move(1, 2, true);
 
         String origin = startNode.toString();
         Node result = startNode.move(move);
@@ -90,16 +92,16 @@ public class NodeTest {
     }
 
     @Test
-    public void testChildren() {
+    public void testChildren() throws IllegalMoveException {
 
-        Node node = startNode.move(new Move(0, 1, true));
+        Node node = startNode.move(new Move(1, 2, true));
 
         List<Move> moves = node.possibleMoves();
         assertEquals(3, moves.size());
 
         assertThat(moves, contains(
-                new Move(2, 2, false),
-                new Move(3, 2, false),
-                new Move(3, 3, false)));
+                new Move(3, 3, false),
+                new Move(4, 3, false),
+                new Move(4, 4, false)));
     }
 }
