@@ -1,7 +1,7 @@
 package github.thewinner958.tictactoe.game;
 
+import github.thewinner958.tictactoe.exceptions.IllegalMoveException;
 import net.jcip.annotations.Immutable;
-import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public class Node {
     private List<Node> children = null;
 
     private boolean moveValidator(Move move) {
-        return move.row() < 0 || move.row() >= setUp.getDimension() || move.column() < 0 || move.column() >= setUp.getDimension();
+        return move.row() < 1 || move.row() > setUp.getDimension() || move.column() < 1 || move.column() > setUp.getDimension();
     }
 
     public Node(GameSetUp setUp, char[][] state, Move originMove) {
@@ -81,10 +81,12 @@ public class Node {
         return new Node(gameSetUp, emptyState, null);
     }
 
-    public Node move(Move move) {
-        if ()
+    public Node move(Move move) throws IllegalMoveException {
+        if (moveValidator(move)) {
+            throw new IllegalMoveException("This move is out of bounds");
+        }
         if (state[move.row()][move.column()] != setUp.getEmptySymbol()) {
-            return null;
+            throw new IllegalMoveException("You can't place it on already used space!");
         }
         return new Node(this, move);
     }
@@ -104,7 +106,7 @@ public class Node {
         return originMove;
     }
 
-    public List<Node> getChildren() {
+    public List<Node> getChildren() throws IllegalMoveException {
         if (this.children == null) {
             this.children = new ArrayList<>();
             List<Move> possibleMoves = possibleMoves();
