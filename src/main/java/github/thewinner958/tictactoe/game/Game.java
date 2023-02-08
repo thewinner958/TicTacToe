@@ -1,5 +1,6 @@
 package github.thewinner958.tictactoe.game;
 
+import github.thewinner958.tictactoe.exceptions.IllegalMoveException;
 import github.thewinner958.tictactoe.game.player.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -69,7 +70,8 @@ public class Game {
             Move move = whoseTurn.getNextMove(this.state);
             try {
                 this.move(move);
-            } catch (RuntimeException e) {
+            } catch (IllegalMoveException e) {
+                System.out.println(e.getMessage());
                 continue;
             }
             System.out.printf("%s made a move: %s \n", whoseTurn.name(), move.toString());
@@ -92,9 +94,9 @@ public class Game {
 
     }
 
-    public void move(Move move) {
+    public void move(Move move) throws IllegalMoveException {
         if (this.state.move(move) == null) {
-            throw new RuntimeException();
+            throw new IllegalMoveException("You can't place it on already used space!");
         }
         this.state = this.state.move(move);
     }
