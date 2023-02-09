@@ -1,5 +1,6 @@
 package github.thewinner958.tictactoe.game.player.bot;
 
+import github.thewinner958.tictactoe.game.exceptions.IllegalMoveException;
 import github.thewinner958.tictactoe.game.Move;
 import github.thewinner958.tictactoe.game.Node;
 import github.thewinner958.tictactoe.game.Pair;
@@ -20,7 +21,7 @@ public class Bot implements Player {
     }
 
     @Override
-    public Move getNextMove(Node state) {
+    public Move getNextMove(Node state) throws IllegalMoveException {
         var bestMove = findBestMove(state, difficulty.getCheckMovesAhead(), state.isPlayerX());
         System.out.printf("%s, to get %f score. \n", bestMove.key(), bestMove.value().floatValue());
 
@@ -30,7 +31,7 @@ public class Bot implements Player {
     // TODO Our Bot considers that the opponent will play optimally and if they see "inevitable"
     //  defeat - the bot just chooses the first child, basically surrendering.
     //  Fix the Bot to try to prolong the game in hope the opponent will make a mistake
-    private static Pair<Move, Number> findBestMove(Node currentState, int depth, boolean isMaxPlayer) {
+    private static Pair<Move, Number> findBestMove(Node currentState, int depth, boolean isMaxPlayer) throws IllegalMoveException {
         if (currentState.isFinal()) {
             return new Pair<>(currentState.getOriginMove(), currentState.getScore());
         }

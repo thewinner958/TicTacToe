@@ -1,7 +1,8 @@
 package github.thewinner958.tictactoe.game;
 
-import github.thewinner958.tictactoe.exceptions.IllegalMoveException;
+import github.thewinner958.tictactoe.game.exceptions.IllegalMoveException;
 import github.thewinner958.tictactoe.game.player.Player;
+import io.micrometer.core.instrument.config.validate.Validated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -57,7 +58,7 @@ public class Game {
      *
      * @param moves How many moves should be played. Pass a negative number to play the game to the end.
      */
-    public void play(int moves) {
+    public void play(int moves) throws IllegalMoveException {
         if (player1 == null || player2 == null) {
             System.out.println("Both player should join before the game begins");
             return;
@@ -71,7 +72,10 @@ public class Game {
             try {
                 this.move(move);
             } catch (IllegalMoveException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Invalid move! Trying to place it on a used space");
+                continue;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Invalid move! Out of bounds");
                 continue;
             }
             System.out.printf("%s made a move: %s \n", whoseTurn.name(), move.toString());

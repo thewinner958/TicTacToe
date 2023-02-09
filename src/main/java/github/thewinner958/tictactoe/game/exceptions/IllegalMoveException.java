@@ -1,4 +1,4 @@
-package github.thewinner958.tictactoe.exceptions;
+package github.thewinner958.tictactoe.game.exceptions;
 
 public class IllegalMoveException extends Exception{
     public IllegalMoveException(String message) {
