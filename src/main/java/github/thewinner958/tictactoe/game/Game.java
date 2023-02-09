@@ -68,8 +68,9 @@ public class Game {
         int movesLeft = moves;
 
         while (!state.isFinal() && movesLeft != 0) {
-            Move move = whoseTurn.getNextMove(this.state);
+            Move move;
             try {
+                move = whoseTurn.getNextMove(this.state);
                 this.move(move);
             } catch (IllegalMoveException e) {
                 System.out.println("Invalid move! Trying to place it on a used space");
@@ -99,9 +100,6 @@ public class Game {
     }
 
     public void move(Move move) throws IllegalMoveException {
-        if (this.state.move(move) == null) {
-            throw new IllegalMoveException("You can't place it on already used space!");
-        }
         this.state = this.state.move(move);
     }
 
