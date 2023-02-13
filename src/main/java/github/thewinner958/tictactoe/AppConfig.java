@@ -1,4 +1,4 @@
-package github.thewinner958.tictactoe.web;
+package github.thewinner958.tictactoe;
 
 import github.thewinner958.tictactoe.game.Game;
 import github.thewinner958.tictactoe.game.GameSetUp;
