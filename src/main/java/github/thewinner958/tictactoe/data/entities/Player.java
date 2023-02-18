@@ -22,10 +22,10 @@ public class Player {
     @Column(name = "password", nullable = false, length = 64)
     private String password;
 
-    @Column(name = "create_time")
+    @Column(name = "create_time", nullable = false)
     private Instant createTime;
 
-    @Column(name = "isBot", nullable = false)
+    @Column(name = "is_bot", nullable = false)
     private Byte isBot;
 
     public Integer getId() {
