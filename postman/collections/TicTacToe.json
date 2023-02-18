@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "41a1277f-a59a-4233-aff9-f8034a0cc586",
+		"name": "TicTacToe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "13557020-41a1277f-a59a-4233-aff9-f8034a0cc586"
+	},
+	"item": [
+		{
+			"name": "All Players",
+			"id": "03f353b8-38e2-4b83-908f-37fbb6ab2987",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/players/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"players",
+						"all"
+					]
+				},
+				"description": "Gets a list of all the players in the db"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a Player by ID",
+			"id": "2f45891f-efde-4d6b-b77b-23c734c0a1eb",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/players?id={{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"players"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{id}}",
+							"description": "the identifier in the db",
+							"type": "text"
+						}
+					]
+				},
+				"description": "Gets the player by their ID in the DB"
+			},
+			"response": []
+		}
+	]
+}

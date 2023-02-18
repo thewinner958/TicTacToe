@@ -5,6 +5,7 @@ id = 58966892-880d-40fe-bc6d-21bd655d733d
 
 [relations.collections]
 rootDirectory = postman/collections
+files[] = {"id":"13557020-41a1277f-a59a-4233-aff9-f8034a0cc586","path":"TicTacToe.json","metaData":{}}
 
 [relations.collections.metaData]
 
