@@ -62,6 +62,40 @@
 				"description": "Gets the player by their ID in the DB"
 			},
 			"response": []
+		},
+		{
+			"name": "Register a Player",
+			"id": "8149c8a4-2c8c-4d4c-880a-fdac517739ce",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"riftwalker\",\r\n    \"email\" : \"riftwalker@playvalorant.com\",\r\n    \"password\" : \"illfighteverybody\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/players/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"players",
+						"register"
+					]
+				},
+				"description": "Registers a player to the db"
+			},
+			"response": []
 		}
 	]
 }
