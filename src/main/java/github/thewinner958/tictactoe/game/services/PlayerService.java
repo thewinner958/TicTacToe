@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -27,6 +28,8 @@ public class PlayerService {
         newPlayer.setUsername(newPlayerDto.username());
         newPlayer.setEmail(newPlayerDto.email());
         newPlayer.setPassword(newPlayerDto.password());
+        newPlayer.setCreateTime(Instant.now());
+        newPlayer.setIsBot((byte) 0);
         return playerRepository.save(newPlayer);
     }
 
