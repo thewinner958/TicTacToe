@@ -77,7 +77,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"riftwalker\",\r\n    \"email\" : \"riftwalker@playvalorant.com\",\r\n    \"password\" : \"illfighteverybody\"\r\n}",
+							"raw": "{\r\n    \"username\": \"riftwalker\",\r\n    \"email\": \"riftwalker@playvalorant.com\",\r\n    \"password\": \"illfighteverybody\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
