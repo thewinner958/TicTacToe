@@ -92,7 +92,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/players?id=2",
+							"raw": "http://localhost:8080/players?id=",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -104,7 +104,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "2",
+									"value": "",
 									"description": "the identifier in the db"
 								}
 							]
@@ -178,7 +178,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"brimstone\",\r\n    \"email\": \"brimstone@playvalorant.com\",\r\n    \"password\": \"fuckpasswords\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -269,7 +269,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"riftwalker\",\r\n    \"email\": \"riftwalker958@playvalorant.com\",\r\n    \"password\": \"illflasheverybody\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
