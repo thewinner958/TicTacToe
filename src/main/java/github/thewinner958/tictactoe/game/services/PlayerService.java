@@ -46,4 +46,12 @@ public class PlayerService {
             return null;
         }
     }
+
+    public Player getPlayerByUsername(String username) {
+        return playerRepository.findByUsername(username);
+    }
+
+    public int updatePlayer(PlayerDto update) {
+        return playerRepository.updateEmailAndPasswordByUsername(update.email(), update.password(), update.username());
+    }
 }

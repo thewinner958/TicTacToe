@@ -33,4 +33,12 @@ public class PlayerController {
         return playerService.createPlayer(register);
     }
 
+    @PostMapping(path = "/update")
+    public PlayerDto updatePlayer(@RequestBody PlayerDto update) {
+        int success = playerService.updatePlayer(update);
+        if (success <= 0) {
+            return null;
+        }
+        return update;
+    }
 }
