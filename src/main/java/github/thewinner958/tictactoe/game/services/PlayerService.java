@@ -3,12 +3,12 @@ package github.thewinner958.tictactoe.game.services;
 
 import github.thewinner958.tictactoe.data.entities.Player;
 import github.thewinner958.tictactoe.data.repositories.PlayerRepository;
+import github.thewinner958.tictactoe.game.services.mappers.PlayerMapper;
 import github.thewinner958.tictactoe.web.DTOs.PlayerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,38 +17,37 @@ import java.util.NoSuchElementException;
 @Transactional
 public class PlayerService {
     private final PlayerRepository playerRepository;
+    private final PlayerMapper playerMapper;
 
     @Autowired
-    public PlayerService(PlayerRepository playerRepository) {
+    public PlayerService(PlayerRepository playerRepository, PlayerMapper playerMapper) {
         this.playerRepository = playerRepository;
+        this.playerMapper = playerMapper;
     }
 
     public Player createPlayer(PlayerDto newPlayerDto) {
-        Player newPlayer = new Player();
-        newPlayer.setUsername(newPlayerDto.username());
-        newPlayer.setEmail(newPlayerDto.email());
-        newPlayer.setPassword(newPlayerDto.password());
-        newPlayer.setCreateTime(Instant.now());
-        newPlayer.setIsBot((byte) 0);
+        Player newPlayer = playerMapper.toEntity(newPlayerDto);
         return playerRepository.save(newPlayer);
     }
 
-    public List<Player> listPlayers() {
-        List<Player> result = new ArrayList<>();
-        playerRepository.findAll().forEach(result::add);
+    public List<PlayerDto> listPlayers() {
+        List<PlayerDto> result = new ArrayList<>();
+        for (Player player : playerRepository.findAll()) {
+            result.add(playerMapper.toDto(player));
+        }
         return result;
     }
 
-    public Player getPlayerById(int id) {
+    public PlayerDto getPlayerById(int id) {
         try {
-            return playerRepository.findById(id).orElseThrow();
+            return playerMapper.toDto(playerRepository.findById(id).orElseThrow());
         } catch (NoSuchElementException e) {
             return null;
         }
     }
 
-    public Player getPlayerByUsername(String username) {
-        return playerRepository.findByUsername(username);
+    public PlayerDto getPlayerByUsername(String username) {
+        return playerMapper.toDto(playerRepository.findByUsername(username));
     }
 
     public int updatePlayer(PlayerDto update) {

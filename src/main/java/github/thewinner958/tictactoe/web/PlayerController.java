@@ -19,12 +19,12 @@ public class PlayerController {
     }
 
     @GetMapping(path = "/all")
-    public List<Player> getAllPlayers() {
+    public List<PlayerDto> getAllPlayers() {
         return playerService.listPlayers();
     }
 
     @GetMapping
-    public Player getPlayerById(@RequestParam int id) {
+    public PlayerDto getPlayerById(@RequestParam int id) {
         return playerService.getPlayerById(id);
     }
 
