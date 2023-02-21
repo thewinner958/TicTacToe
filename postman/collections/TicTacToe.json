@@ -32,7 +32,55 @@
 						},
 						"description": "Gets a list of all the players in the db"
 					},
-					"response": []
+					"response": [
+						{
+							"id": "86fcdd37-3d93-4e7f-abcf-a3e200d952fd",
+							"name": "All Players",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/players/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"players",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Feb 2023 14:25:25 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"username\": \"kayo\",\n        \"email\": \"kayo@playvalorant.com\",\n        \"password\": \"111111111\",\n        \"createTime\": \"2023-02-18T17:35:40Z\",\n        \"isBot\": 1\n    },\n    {\n        \"id\": 2,\n        \"username\": \"riftwalker\",\n        \"email\": \"riftwalker958@playvalorant.com\",\n        \"password\": \"illflasheverybody\",\n        \"createTime\": \"2023-02-19T10:22:03Z\",\n        \"isBot\": 0\n    },\n    {\n        \"id\": 3,\n        \"username\": \"brimstone\",\n        \"email\": \"brimstone@playvalorant.com\",\n        \"password\": \"fuckpasswords\",\n        \"createTime\": \"2023-02-21T14:24:33Z\",\n        \"isBot\": 0\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "Get a Player by ID",
@@ -44,7 +92,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/players?id={{id}}",
+							"raw": "http://localhost:8080/players?id=2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -56,15 +104,68 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "{{id}}",
-									"description": "the identifier in the db",
-									"type": "text"
+									"value": "2",
+									"description": "the identifier in the db"
 								}
 							]
 						},
 						"description": "Gets the player by their ID in the DB"
 					},
-					"response": []
+					"response": [
+						{
+							"id": "af121871-393b-4a6d-af48-06a3cc823a23",
+							"name": "Get a Player by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/players?id=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"players"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "2",
+											"description": "the identifier in the db"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Feb 2023 14:25:13 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 2,\n    \"username\": \"riftwalker\",\n    \"email\": \"riftwalker958@playvalorant.com\",\n    \"password\": \"illflasheverybody\",\n    \"createTime\": \"2023-02-19T10:22:03Z\",\n    \"isBot\": 0\n}"
+						}
+					]
 				},
 				{
 					"name": "Register a Player",
@@ -77,7 +178,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"riftwalker\",\r\n    \"email\": \"riftwalker@playvalorant.com\",\r\n    \"password\": \"illfighteverybody\"\r\n}",
+							"raw": "{\r\n    \"username\": \"brimstone\",\r\n    \"email\": \"brimstone@playvalorant.com\",\r\n    \"password\": \"fuckpasswords\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -98,10 +199,162 @@
 						},
 						"description": "Registers a player to the db"
 					},
-					"response": []
+					"response": [
+						{
+							"id": "4602ac3d-6356-46c1-9f27-348815496bc2",
+							"name": "Register a Player",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"brimstone\",\r\n    \"email\": \"brimstone@playvalorant.com\",\r\n    \"password\": \"fuckpasswords\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/players/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"players",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Feb 2023 14:24:32 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"username\": \"brimstone\",\n    \"email\": \"brimstone@playvalorant.com\",\n    \"password\": \"fuckpasswords\",\n    \"createTime\": \"2023-02-21T14:24:32.677999Z\",\n    \"isBot\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "Update a Player",
+					"id": "eadfb79f-1106-4751-b1ab-69974700e7d8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"riftwalker\",\r\n    \"email\": \"riftwalker958@playvalorant.com\",\r\n    \"password\": \"illflasheverybody\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/players/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"players",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "4c459ed5-9576-4198-8561-c5e2defed695",
+							"name": "Update a Player",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"riftwalker\",\r\n    \"email\": \"riftwalker958@playvalorant.com\",\r\n    \"password\": \"illflasheverybody\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/players/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"players",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Feb 2023 14:23:01 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"username\": \"riftwalker\",\n    \"email\": \"riftwalker958@playvalorant.com\",\n    \"password\": \"illflasheverybody\"\n}"
+						}
+					]
 				}
 			],
 			"id": "6dc4a61e-ff5a-4f73-a783-88f5935440b1"
+		},
+		{
+			"name": "Game API",
+			"item": [],
+			"id": "7ef37c2e-6b63-49bf-8f37-0eeae7fbdf76"
 		}
 	]
 }
