@@ -19,12 +19,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/players/all",
-							"protocol": "http",
+							"raw": "{{url}}/players/all",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"players",
 								"all"
@@ -92,12 +90,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/players?id=",
-							"protocol": "http",
+							"raw": "{{url}}/players?id=",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"players"
 							],
@@ -186,12 +182,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/players/register",
-							"protocol": "http",
+							"raw": "{{url}}/players/register",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"players",
 								"register"
@@ -277,12 +271,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/players/update",
-							"protocol": "http",
+							"raw": "{{url}}/players/update",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"players",
 								"update"
