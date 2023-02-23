@@ -2,7 +2,7 @@ package github.thewinner958.tictactoe.web;
 
 import github.thewinner958.tictactoe.data.entities.Player;
 import github.thewinner958.tictactoe.game.services.PlayerService;
-import github.thewinner958.tictactoe.web.DTOs.PlayerDto;
+import github.thewinner958.tictactoe.game.services.DTOs.PlayerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,27 +18,23 @@ public class PlayerController {
         this.playerService = playerService;
     }
 
-    @GetMapping(path = "/all")
+    @GetMapping
     public List<PlayerDto> getAllPlayers() {
         return playerService.listPlayers();
     }
 
-    @GetMapping
-    public PlayerDto getPlayerById(@RequestParam int id) {
+    @GetMapping("/{id}")
+    public PlayerDto getPlayerById(@PathVariable Integer id) {
         return playerService.getPlayerById(id);
     }
 
-    @PostMapping(path = "/register")
-    public Player registerPlayer(@RequestBody PlayerDto register) {
+    @PostMapping
+    public PlayerDto registerPlayer(@RequestBody PlayerDto register) {
         return playerService.createPlayer(register);
     }
 
-    @PostMapping(path = "/update")
+    @PutMapping
     public PlayerDto updatePlayer(@RequestBody PlayerDto update) {
-        int success = playerService.updatePlayer(update);
-        if (success <= 0) {
-            return null;
-        }
-        return update;
+        return playerService.updatePlayer(update);
     }
 }

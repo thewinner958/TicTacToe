@@ -10,16 +10,18 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring", uses = PlayerService.class, nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
 public interface PlayerMapper {
 
-    @Mapping(target = "isBot")
-    @Mapping(target = "id")
-    @Mapping(target = "createTime")
+    @Mappings({@Mapping(target = "isBot"),
+            @Mapping(target = "id"),
+            @Mapping(target = "createTime"),
+            @Mapping(target = "password")})
     Player toEntity(PlayerDto playerDto);
 
     PlayerDto toDto(Player player);
 
-    @Mapping(target = "isBot")
-    @Mapping(target = "id")
-    @Mapping(target = "createTime")
+    @Mappings({@Mapping(target = "isBot"),
+            @Mapping(target = "id"),
+            @Mapping(target = "createTime"),
+            @Mapping(target = "password")})
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Player partialUpdate(PlayerDto playerDto, @MappingTarget Player player);
 }

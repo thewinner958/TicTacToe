@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -25,9 +26,13 @@ public class PlayerService {
         this.playerMapper = playerMapper;
     }
 
-    public Player createPlayer(PlayerDto newPlayerDto) {
+    public PlayerDto createPlayer(PlayerDto newPlayerDto) {
         Player newPlayer = playerMapper.toEntity(newPlayerDto);
-        return playerRepository.save(newPlayer);
+
+        newPlayer.setCreateTime(Instant.now());
+        newPlayer.setIsBot((byte) 0);
+
+        return playerMapper.toDto(playerRepository.save(newPlayer));
     }
 
     public List<PlayerDto> listPlayers() {
@@ -46,11 +51,15 @@ public class PlayerService {
         }
     }
 
-    public PlayerDto getPlayerByUsername(String username) {
+    private PlayerDto getPlayerByUsername(String username) {
         return playerMapper.toDto(playerRepository.findByUsername(username));
     }
 
-    public int updatePlayer(PlayerDto update) {
-        return playerRepository.updateEmailAndPasswordByUsername(update.email(), update.password(), update.username());
+    public PlayerDto updatePlayer(PlayerDto update) {
+        if (playerRepository.updateEmailAndPasswordByUsername(update.email(), update.password(), update.username()) <= 0) {
+            return null;
+        }
+
+        return playerMapper.toDto(playerRepository.findByUsername(update.username()));
     }
 }
