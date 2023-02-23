@@ -1,4 +1,4 @@
-package github.thewinner958.tictactoe.web.DTOs;
+package github.thewinner958.tictactoe.game.services.DTOs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
