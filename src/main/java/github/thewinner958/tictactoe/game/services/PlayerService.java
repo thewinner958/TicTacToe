@@ -3,8 +3,8 @@ package github.thewinner958.tictactoe.game.services;
 
 import github.thewinner958.tictactoe.data.entities.Player;
 import github.thewinner958.tictactoe.data.repositories.PlayerRepository;
-import github.thewinner958.tictactoe.game.services.mappers.PlayerMapper;
 import github.thewinner958.tictactoe.game.services.DTOs.PlayerDto;
+import github.thewinner958.tictactoe.game.services.mappers.PlayerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,8 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
+
+/**
+ * Service class for player management
+ * @author TheWinner
+ */
 @Service
 @Transactional
 public class PlayerService {
@@ -43,12 +48,9 @@ public class PlayerService {
         return result;
     }
 
-    public PlayerDto getPlayerById(int id) {
-        try {
-            return playerMapper.toDto(playerRepository.findById(id).orElseThrow());
-        } catch (NoSuchElementException e) {
-            return null;
-        }
+    public Optional<PlayerDto> getPlayerById(int id) {
+        Optional<Player> player = playerRepository.findById(id);
+        return player.map(playerMapper::toDto);
     }
 
     private PlayerDto getPlayerByUsername(String username) {
