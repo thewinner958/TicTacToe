@@ -53,10 +53,6 @@ public class PlayerService {
         return player.map(playerMapper::toDto);
     }
 
-    private PlayerDto getPlayerByUsername(String username) {
-        return playerMapper.toDto(playerRepository.findByUsername(username));
-    }
-
     public PlayerDto updatePlayer(PlayerDto update) {
         if (playerRepository.updateEmailAndPasswordByUsername(update.email(), update.password(), update.username()) <= 0) {
             return null;
