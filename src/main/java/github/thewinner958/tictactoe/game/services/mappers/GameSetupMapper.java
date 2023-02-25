@@ -1,10 +1,13 @@
 package github.thewinner958.tictactoe.game.services.mappers;
 
 import github.thewinner958.tictactoe.data.entities.GameSetup;
+import github.thewinner958.tictactoe.game.services.GameSetupService;
 import github.thewinner958.tictactoe.web.DTOs.GameSetupDto;
 import org.mapstruct.*;
+import org.springframework.stereotype.Component;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
+@Component
+@Mapper(componentModel = "spring", uses = GameSetupService.class, nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
 public interface GameSetupMapper {
     GameSetup toEntity(GameSetupDto gameSetupDto);
 
