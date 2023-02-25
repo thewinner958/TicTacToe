@@ -3,7 +3,7 @@ package github.thewinner958.tictactoe.game.services;
 
 import github.thewinner958.tictactoe.data.entities.Player;
 import github.thewinner958.tictactoe.data.repositories.PlayerRepository;
-import github.thewinner958.tictactoe.game.services.DTOs.PlayerDto;
+import github.thewinner958.tictactoe.web.DTOs.PlayerDto;
 import github.thewinner958.tictactoe.game.services.mappers.PlayerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

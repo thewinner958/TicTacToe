@@ -1,8 +1,7 @@
 package github.thewinner958.tictactoe.web;
 
-import github.thewinner958.tictactoe.data.entities.Player;
 import github.thewinner958.tictactoe.game.services.PlayerService;
-import github.thewinner958.tictactoe.game.services.DTOs.PlayerDto;
+import github.thewinner958.tictactoe.web.DTOs.PlayerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

@@ -2,7 +2,7 @@ package github.thewinner958.tictactoe.game.services.mappers;
 
 import github.thewinner958.tictactoe.data.entities.Player;
 import github.thewinner958.tictactoe.game.services.PlayerService;
-import github.thewinner958.tictactoe.game.services.DTOs.PlayerDto;
+import github.thewinner958.tictactoe.web.DTOs.PlayerDto;
 import org.mapstruct.*;
 import org.springframework.stereotype.Component;
 
