@@ -53,11 +53,10 @@ public class PlayerService {
         return player.map(playerMapper::toDto);
     }
 
-    public PlayerDto updatePlayer(PlayerDto update) {
+    public Optional<PlayerDto> updatePlayer(PlayerDto update) {
         if (playerRepository.updateEmailAndPasswordByUsername(update.email(), update.password(), update.username()) <= 0) {
-            return null;
+            return Optional.empty();
         }
-
-        return playerMapper.toDto(playerRepository.findByUsername(update.username()));
+        return playerRepository.findById(update.id()).map(playerMapper::toDto);
     }
 }

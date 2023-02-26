@@ -28,8 +28,7 @@ public class PlayerController {
     @GetMapping("/{id}")
     public @ResponseBody PlayerDto getPlayerById(@PathVariable Integer id) {
         if (id == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id.");
-        Optional<PlayerDto> result = playerService.getPlayerById(id);
-        return result.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found"));
+        return playerService.getPlayerById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found"));
     }
 
     @PostMapping
@@ -39,10 +38,7 @@ public class PlayerController {
 
     @PutMapping
     public @ResponseBody PlayerDto updatePlayer(@RequestBody PlayerDto update) {
-        PlayerDto result = playerService.updatePlayer(update);
-        if (result == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Player does not exit");
-        }
-        return playerService.updatePlayer(update);
+        if (update.id() == 1) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Can't update this!");
+        return playerService.updatePlayer(update).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found"));
     }
 }

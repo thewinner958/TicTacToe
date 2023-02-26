@@ -26,10 +26,18 @@ public class GameSetupController {
 
     @GetMapping("/{id}")
     public @ResponseBody GameSetupDto getSetupById (@PathVariable Integer id) {
-        if (id == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id!");
-        }
-
+        if (id == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid id!");
         return service.getSetup(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Setup was not found!"));
+    }
+
+    @PostMapping
+    public @ResponseBody GameSetupDto createSetup(@RequestBody GameSetupDto setup) {
+        return service.createSetup(setup);
+    }
+
+    @PutMapping
+    public @ResponseBody GameSetupDto updateSetup(@RequestBody GameSetupDto update) {
+        if (update.id() == 1) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Can't update this!");
+        return service.updateSetup(update).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Can't find id!"));
     }
 }
