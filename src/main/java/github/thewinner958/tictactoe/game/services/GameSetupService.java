@@ -41,8 +41,7 @@ public class GameSetupService {
     }
 
     public Optional<GameSetupDto> updateSetup(GameSetupDto update) {
-        if (repository.updateById(update.player1Char(), update.player2Char(), update.emptyChar(), update.boardRows(),
-                update.boardColumns(), update.id()) <= 0) return Optional.empty();
+        if (repository.updateById(update.player1Char(), update.player2Char(), update.emptyChar(), update.dimension(), update.id()) <= 0) return Optional.empty();
         return getSetup(update.id());
     }
 }

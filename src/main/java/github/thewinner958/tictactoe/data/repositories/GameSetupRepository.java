@@ -12,7 +12,7 @@ public interface GameSetupRepository extends CrudRepository<GameSetup, Integer> 
     @Transactional
     @Modifying
     @Query("""
-            update GameSetup g set g.player1Char = ?1, g.player2Char = ?2, g.emptyChar = ?3, g.boardRows = ?4, g.boardColumns = ?5
-            where g.id = ?6""")
-    int updateById(Character player1Char, Character player2Char, Character emptyChar, Long boardRows, Long boardColumns, Integer id);
+            update GameSetup g set g.player1Char = ?1, g.player2Char = ?2, g.emptyChar = ?3, g.dimension = ?4
+            where g.id = ?5""")
+    int updateById(Character player1Char, Character player2Char, Character emptyChar, Long dimension, Integer id);
 }

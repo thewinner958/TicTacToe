@@ -18,12 +18,8 @@ public class GameSetup {
 
     @Column(name = "empty_char", nullable = false)
     private Character emptyChar;
-
-    @Column(name = "board_rows", nullable = false)
-    private Long boardRows;
-
-    @Column(name = "board_columns", nullable = false)
-    private Long boardColumns;
+    @Column(name = "dimension", nullable = false)
+    private Long dimension;
 
     public Integer getId() {
         return id;
@@ -57,20 +53,11 @@ public class GameSetup {
         this.emptyChar = emptyChar;
     }
 
-    public Long getBoardRows() {
-        return boardRows;
+    public Long getDimension() {
+        return dimension;
     }
 
-    public void setBoardRows(Long boardRows) {
-        this.boardRows = boardRows;
+    public void setDimension(Long dimension) {
+        this.dimension = dimension;
     }
-
-    public Long getBoardColumns() {
-        return boardColumns;
-    }
-
-    public void setBoardColumns(Long boardColumns) {
-        this.boardColumns = boardColumns;
-    }
-
 }
