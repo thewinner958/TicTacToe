@@ -5,6 +5,7 @@ import github.thewinner958.tictactoe.data.repositories.GameSetupRepository;
 import github.thewinner958.tictactoe.game.services.mappers.GameSetupMapper;
 import github.thewinner958.tictactoe.web.DTOs.GameSetupDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class GameSetupService {
     private final GameSetupMapper mapper;
 
     @Autowired
-    public GameSetupService(GameSetupRepository repository, GameSetupMapper mapper) {
+    public GameSetupService(GameSetupRepository repository, @Qualifier("gameSetupMapper") GameSetupMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
