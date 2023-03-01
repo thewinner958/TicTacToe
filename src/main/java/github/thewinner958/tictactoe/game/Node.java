@@ -64,8 +64,8 @@ public class Node {
     }
 
     public static Node empty(GameSetUp gameSetUp) {
-        int n = gameSetUp.getDimension();
-        char[][] emptyState = new char[n][n];
+        long n = gameSetUp.getDimension();
+        char[][] emptyState = new char[(int) n][(int) n];
 
         for (char[] row : emptyState) {
             Arrays.fill(row, gameSetUp.getEmptySymbol());
@@ -149,7 +149,7 @@ public class Node {
     protected char findWin() {
         char winSymbol;
         int countSame;
-        int N = setUp.getDimension();
+        long N = setUp.getDimension();
         WinnableSequence[] ws = {
                 (int i, int j) -> { // Row sequence
                     return this.state[i][j];
@@ -172,7 +172,7 @@ public class Node {
                 },
 
                 (int i, int j) -> {// Opposing diagonal - down
-                    return this.state[N - j - 1][i + j];
+                    return this.state[(int) (N - j - 1)][i + j];
                 }
         };
 
