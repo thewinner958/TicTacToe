@@ -24,8 +24,8 @@ public class GameSetupService {
         this.mapper = mapper;
     }
 
-    public GameSetupDto createSetup(GameSetupDto gameSetup) {
-        return mapper.toDto(repository.save(mapper.toEntity(gameSetup)));
+    public GameSetupDto createSetup(GameSetupDto dto) {
+        return mapper.toDto(repository.save(mapper.toEntity(dto)));
     }
 
     public List<GameSetupDto> getAllSetups() {
@@ -40,8 +40,16 @@ public class GameSetupService {
         return repository.findById(id).map(mapper::toDto);
     }
 
-    public Optional<GameSetupDto> updateSetup(GameSetupDto update) {
-        if (repository.updateById(update.player1Char(), update.player2Char(), update.emptyChar(), update.dimension(), update.id()) <= 0) return Optional.empty();
-        return getSetup(update.id());
+    public Optional<GameSetupDto> updateSetup(GameSetupDto dto) {
+        if (repository.updateById(dto.player1Char(), dto.player2Char(), dto.emptyChar(), dto.dimension(), dto.id()) <= 0) return Optional.empty();
+        return getSetup(dto.id());
+    }
+
+    protected GameSetupRepository getRepository() {
+        return repository;
+    }
+
+    protected GameSetupMapper getMapper() {
+        return mapper;
     }
 }

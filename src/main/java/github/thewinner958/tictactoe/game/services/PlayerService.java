@@ -60,4 +60,12 @@ public class PlayerService {
         }
         return repository.findById(update.id()).map(mapper::toDto);
     }
+
+    protected PlayerRepository getRepository() {
+        return repository;
+    }
+
+    protected PlayerMapper getMapper() {
+        return mapper;
+    }
 }
