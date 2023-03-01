@@ -4,11 +4,11 @@ import github.thewinner958.tictactoe.game.exceptions.IllegalMoveException;
 import github.thewinner958.tictactoe.game.Move;
 import github.thewinner958.tictactoe.game.Node;
 import github.thewinner958.tictactoe.game.Pair;
-import github.thewinner958.tictactoe.game.player.Player;
+import github.thewinner958.tictactoe.game.player.PlayerInterface;
 
 import java.util.List;
 
-public class Bot implements Player {
+public class Bot implements PlayerInterface {
     private final BotDifficulty difficulty;
 
     public Bot(BotDifficulty difficulty) {

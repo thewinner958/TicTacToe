@@ -1,10 +1,8 @@
 package github.thewinner958.tictactoe.game;
 
 import github.thewinner958.tictactoe.game.exceptions.IllegalMoveException;
-import github.thewinner958.tictactoe.game.player.Player;
-import io.micrometer.core.instrument.config.validate.Validated;
+import github.thewinner958.tictactoe.game.player.PlayerInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -12,8 +10,8 @@ import java.util.Optional;
 @Component
 public class Game {
     private Node state;
-    private Player player1;
-    private Player player2;
+    private PlayerInterface player1;
+    private PlayerInterface player2;
     private int finalScore;
 
     public Optional<Integer> getFinalScore() {
@@ -41,15 +39,11 @@ public class Game {
         this(new Node(setUp, state, null));
     }
 
-    @Autowired
-    @Qualifier("consolePlayer")
-    public void setPlayer1(Player player1) {
+    public void setPlayer1(PlayerInterface player1) {
         this.player1 = player1;
     }
 
-    @Autowired
-    @Qualifier("bot")
-    public void setPlayer2(Player player2) {
+    public void setPlayer2(PlayerInterface player2) {
         this.player2 = player2;
     }
 
@@ -58,13 +52,13 @@ public class Game {
      *
      * @param moves How many moves should be played. Pass a negative number to play the game to the end.
      */
-    public void play(int moves) throws IllegalMoveException {
+    public void play(int moves) {
         if (player1 == null || player2 == null) {
             System.out.println("Both player should join before the game begins");
             return;
         }
-        // Player 1 always starts first.
-        Player whoseTurn = state.isPlayerX() ? player1 : player2;
+        // PlayerInterface 1 always starts first.
+        PlayerInterface whoseTurn = state.isPlayerX() ? player1 : player2;
         int movesLeft = moves;
 
         while (!state.isFinal() && movesLeft != 0) {
@@ -93,7 +87,7 @@ public class Game {
                 System.out.println("It's a draw!");
             } else {
                 String wonLost = (finalScore > 0) ? "won" : "lost";
-                System.out.printf("Player 1: %s %s and gets %d points!\n", player1.name(), wonLost, state.getScore());
+                System.out.printf("PlayerInterface 1: %s %s and gets %d points!\n", player1.name(), wonLost, state.getScore());
             }
         }
 

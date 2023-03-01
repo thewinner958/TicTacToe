@@ -2,7 +2,7 @@ package github.thewinner958.tictactoe;
 
 import github.thewinner958.tictactoe.game.Game;
 import github.thewinner958.tictactoe.game.GameSetUp;
-import github.thewinner958.tictactoe.game.player.Player;
+import github.thewinner958.tictactoe.game.player.PlayerInterface;
 import github.thewinner958.tictactoe.game.player.PlayerConsole;
 import github.thewinner958.tictactoe.game.player.bot.Bot;
 import github.thewinner958.tictactoe.game.player.bot.BotDifficulty;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
     @Bean
-    public Game startGame(@Qualifier("consolePlayer") Player player1,@Qualifier("bot") Player player2) {
+    public Game startGame(@Qualifier("consolePlayer") PlayerInterface player1, @Qualifier("bot") PlayerInterface player2) {
         Game game = new Game(getGameConfig(), getStartingState());
         game.setPlayer1(player1);
         game.setPlayer2(player2);
@@ -25,7 +25,7 @@ public class AppConfig {
     }
 
     @Bean("consolePlayer")
-    public Player getConsole() {
+    public PlayerInterface getConsole() {
         return new PlayerConsole(getPlayerName());
     }
 
@@ -40,7 +40,7 @@ public class AppConfig {
     }
 
     @Bean("bot")
-    public Player getBot(BotDifficulty difficulty) {
+    public PlayerInterface getBot(BotDifficulty difficulty) {
         return new Bot(difficulty);
     }
 

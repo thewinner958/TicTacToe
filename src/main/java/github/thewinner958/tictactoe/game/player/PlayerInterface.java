@@ -4,7 +4,7 @@ import github.thewinner958.tictactoe.game.exceptions.IllegalMoveException;
 import github.thewinner958.tictactoe.game.Move;
 import github.thewinner958.tictactoe.game.Node;
 
-public interface Player {
+public interface PlayerInterface {
     public String name();
     public Move getNextMove(Node state) throws IllegalMoveException;
 }

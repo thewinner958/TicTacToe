@@ -7,18 +7,18 @@ public class GameSetUp {
     private final char xPlayerSymbol;
     private final char opponentSymbol;
     private final char emptySymbol;
-    private final int dimension;
-    private final int countToWin;
+    private final long dimension;
+    private final long countToWin;
 
     public GameSetUp() {
         this(3, 3);
     }
 
-    public GameSetUp(int dimension, int countToWin) {
+    public GameSetUp(long dimension, long countToWin) {
         this('X', 'O', '_', dimension, countToWin);
     }
 
-    public GameSetUp(char xPlayerSymbol, char opponentSymbol, char emptySymbol, int dimension, int countToWin) {
+    public GameSetUp(char xPlayerSymbol, char opponentSymbol, char emptySymbol, long dimension, long countToWin) {
         if (xPlayerSymbol == 0 || opponentSymbol == 0 || emptySymbol == 0) {
             throw new RuntimeException("Illegal character was used, please use other symbol");
         }
@@ -41,11 +41,11 @@ public class GameSetUp {
         return emptySymbol;
     }
 
-    public int getDimension() {
+    public long getDimension() {
         return dimension;
     }
 
-    public int getCountToWin() {
+    public long getCountToWin() {
         return countToWin;
     }
 }
