@@ -146,7 +146,7 @@ public class Node {
         return this.score;
     }
 
-    protected char findWin() {
+    protected Character findWin() {
         char winSymbol;
         int countSame;
         long N = setUp.getDimension();
@@ -200,7 +200,7 @@ public class Node {
                 }
             }
         }
-        return 0;
+        return null;
     }
 
     @Override
