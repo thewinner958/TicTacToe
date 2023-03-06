@@ -31,26 +31,25 @@ public class NodeTest {
     // FIXME: 08/02/2023 Fix this test
     @Test
     public void testWinRowColumn() throws IllegalMoveException {
-        char Null = 0;
         //assertSame('O', startNode.findWin());
 
-        assertSame(Null, startNode.findWin());
+        assertSame(null, startNode.findWin());
 
-        Node node = startNode.move(new Move(4, 3, true));
+        Node node = startNode.move(new Move(3, 2, true));
 
-        assertSame(Null, node.findWin());
+        assertSame(null, node.findWin());
 
-        node = node.move(new Move(2, 1, true));
+        node = node.move(new Move(1, 0, true));
         assertSame('X', node.findWin());
 
-        node = node.move(new Move(1, 1, false));
-        assertSame(Null, node.findWin());
+        node = node.move(new Move(0, 0, false));
+        assertSame(null, node.findWin());
 
-        node = node.move(new Move(1, 2, false));
+        node = node.move(new Move(0, 1, false));
         System.out.println(node);
         assertSame('O', node.findWin());
 
-        node = node.move(new Move(2, 2, true));
+        node = node.move(new Move(1, 1, true));
         assertSame('X', node.findWin());
     }
 
@@ -86,7 +85,7 @@ public class NodeTest {
         assertEquals(origin, startNode.toString(), "Check that the original state has not changed");
 
         char symbol = result.toString().charAt(
-                (startNode.getSetUp().getDimension() * move.row()) + move.column());
+                (int) ((startNode.getSetUp().getDimension() * move.row()) + move.column()));
 
         assertSame(move.isPlayerX() ? startNode.getSetUp().getXPlayerSymbol() : startNode.getSetUp().getOpponentSymbol(), symbol);
     }
