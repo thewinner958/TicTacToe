@@ -33,7 +33,13 @@ public class Game {
     private Instant created;
 
     @Column(name = "game_status", nullable = false)
-    private Byte gameStatus;
+    private Boolean gameStatus;
+
+    @Column(name = "state")
+    private String state;
+
+    @Column(name = "who_won")
+    private Boolean whoWon;
 
     public Integer getId() {
         return id;
@@ -75,12 +81,27 @@ public class Game {
         this.created = created;
     }
 
-    public Byte getGameStatus() {
+    public Boolean getGameStatus() {
         return gameStatus;
     }
 
-    public void setGameStatus(Byte gameStatus) {
+    public void setGameStatus(Boolean gameStatus) {
         this.gameStatus = gameStatus;
     }
 
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public Boolean getWhoWon() {
+        return whoWon;
+    }
+
+    public void setWhoWon(Boolean whoWon) {
+        this.whoWon = whoWon;
+    }
 }
