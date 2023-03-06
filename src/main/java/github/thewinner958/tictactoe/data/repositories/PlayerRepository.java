@@ -8,10 +8,10 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
+import java.util.Optional;
 
 public interface PlayerRepository extends CrudRepository<Player, Integer> {
-    Player findByUsername(String username);
+    Optional<Player> findByUsername(String username);
 
     @Transactional
     @Modifying

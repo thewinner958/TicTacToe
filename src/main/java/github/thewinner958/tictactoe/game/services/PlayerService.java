@@ -27,7 +27,7 @@ public class PlayerService {
     private final PlayerMapper mapper;
 
     @Autowired
-    public PlayerService(PlayerRepository repository, @Qualifier("playerMapper") PlayerMapper mapper) {
+    public PlayerService(PlayerRepository repository, PlayerMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
@@ -52,6 +52,10 @@ public class PlayerService {
     public Optional<PlayerDto> getPlayerById(int id) {
         Optional<Player> player = repository.findById(id);
         return player.map(mapper::toDto);
+    }
+
+    public Optional<PlayerDto> getPlayerByUsername(String username) {
+        return repository.findByUsername(username).map(mapper::toDto);
     }
 
     public Optional<PlayerDto> updatePlayer(PlayerDto update) {
