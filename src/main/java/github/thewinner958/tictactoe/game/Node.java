@@ -240,4 +240,7 @@ public class Node {
         char charAt(int start, int index);
     }
 
+    public char[][] getState() {
+        return state;
+    }
 }
