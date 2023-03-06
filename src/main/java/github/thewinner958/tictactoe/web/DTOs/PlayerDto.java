@@ -10,6 +10,6 @@ import java.time.Instant;
 /**
  * A DTO for the {@link github.thewinner958.tictactoe.data.entities.Player} entity
  */
-public record PlayerDto(Integer id, String username, String email, @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) String password, Instant createTime, @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) Byte isBot) implements Serializable {
+public record PlayerDto(Integer id, String username, String email, @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) String password, @JsonProperty(access = JsonProperty.Access.READ_ONLY) Instant createTime, @JsonIgnore Boolean isBot) implements Serializable {
 
 }
