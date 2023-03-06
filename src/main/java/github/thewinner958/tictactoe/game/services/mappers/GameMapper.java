@@ -5,7 +5,7 @@ import github.thewinner958.tictactoe.web.DTOs.GameDto;
 import org.mapstruct.*;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("gameMapper")
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {PlayerMapper.class, PlayerMapper.class, GameSetupMapper.class}, nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
 public interface GameMapper {
     Game toEntity(GameDto gameDto);

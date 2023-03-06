@@ -6,7 +6,7 @@ import github.thewinner958.tictactoe.web.DTOs.PlayerDto;
 import org.mapstruct.*;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("playerMapper")
 @Mapper(componentModel = "spring", uses = PlayerService.class, nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
 public interface PlayerMapper {
 

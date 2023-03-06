@@ -6,7 +6,7 @@ import github.thewinner958.tictactoe.web.DTOs.GameSetupDto;
 import org.mapstruct.*;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("gameSetupMapper")
 @Mapper(componentModel = "spring", uses = GameSetupService.class, nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
 public interface GameSetupMapper {
     GameSetup toEntity(GameSetupDto gameSetupDto);
