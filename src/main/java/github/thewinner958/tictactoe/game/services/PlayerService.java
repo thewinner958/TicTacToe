@@ -3,10 +3,9 @@ package github.thewinner958.tictactoe.game.services;
 
 import github.thewinner958.tictactoe.data.entities.Player;
 import github.thewinner958.tictactoe.data.repositories.PlayerRepository;
-import github.thewinner958.tictactoe.web.DTOs.PlayerDto;
 import github.thewinner958.tictactoe.game.services.mappers.PlayerMapper;
+import github.thewinner958.tictactoe.web.DTOs.PlayerDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,10 +45,12 @@ public class PlayerService {
         for (Player player : repository.findAll()) {
             result.add(mapper.toDto(player));
         }
+        result.removeIf(PlayerDto::isBot);
         return result;
     }
 
     public Optional<PlayerDto> getPlayerById(int id) {
+        if (id == 1) return Optional.empty();
         Optional<Player> player = repository.findById(id);
         return player.map(mapper::toDto);
     }
