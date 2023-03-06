@@ -100,5 +100,9 @@ public class Game {
     public Node getState() {
         return this.state;
     }
+
+    public void setState(Node state) {
+        this.state = state;
+    }
 }
 
