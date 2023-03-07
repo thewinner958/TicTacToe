@@ -104,5 +104,13 @@ public class Game {
     public void setState(Node state) {
         this.state = state;
     }
+
+    public PlayerInterface getPlayer1() {
+        return player1;
+    }
+
+    public PlayerInterface getPlayer2() {
+        return player2;
+    }
 }
 
