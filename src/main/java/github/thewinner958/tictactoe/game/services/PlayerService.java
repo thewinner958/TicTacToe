@@ -33,10 +33,7 @@ public class PlayerService {
 
     public PlayerDto createPlayer(PlayerDto newPlayerDto) {
         Player newPlayer = mapper.toEntity(newPlayerDto);
-
         newPlayer.setCreateTime(Instant.now());
-        newPlayer.setIsBot((byte) 0);
-
         return mapper.toDto(repository.save(newPlayer));
     }
 
@@ -45,7 +42,6 @@ public class PlayerService {
         for (Player player : repository.findAll()) {
             result.add(mapper.toDto(player));
         }
-        result.removeIf(PlayerDto::isBot);
         return result;
     }
 

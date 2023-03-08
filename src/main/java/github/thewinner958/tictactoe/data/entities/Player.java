@@ -25,9 +25,6 @@ public class Player {
     @Column(name = "create_time", nullable = false)
     private Instant createTime;
 
-    @Column(name = "is_bot", nullable = false)
-    private Byte isBot;
-
     public Integer getId() {
         return id;
     }
@@ -66,14 +63,6 @@ public class Player {
 
     public void setCreateTime(Instant createTime) {
         this.createTime = createTime;
-    }
-
-    public Byte getIsBot() {
-        return isBot;
-    }
-
-    public void setIsBot(Byte isBot) {
-        this.isBot = isBot;
     }
 
 }

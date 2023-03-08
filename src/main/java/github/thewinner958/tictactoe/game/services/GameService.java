@@ -33,41 +33,6 @@ public class GameService {
     private final MoveMapper moveMapper;
     private final PlayerService players;
     private final GameSetupService setups;
-    private github.thewinner958.tictactoe.game.Game game;
-
-    private static class RestPlayer implements PlayerInterface {
-        private final Player player;
-        private Move playerMove;
-
-        private RestPlayer(Player player) {
-            this.player = player;
-        }
-
-        public Player getPlayer() {
-            return player;
-        }
-
-        public Move getPlayerMove() {
-            return playerMove;
-        }
-
-        public void setPlayerMove(Move playerMove) {
-            this.playerMove = playerMove;
-        }
-
-        @Override
-        public String name() {
-            return player.getUsername();
-        }
-
-        @Override
-        public Move getNextMove(Node state) {
-            if (playerMove == null || state.move(playerMove) == null) {
-                return null;
-            }
-            return playerMove;
-        }
-    }
 
     @Autowired
     public GameService(GameRepository repository, PlayerService players, GameSetupService setups, GameMapper mapper,
