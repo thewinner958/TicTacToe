@@ -1,7 +1,11 @@
 package github.thewinner958.tictactoe.web;
 
+import github.thewinner958.tictactoe.game.exceptions.AlreadyHas2ndPlayerException;
+import github.thewinner958.tictactoe.game.exceptions.FinishedGameException;
+import github.thewinner958.tictactoe.game.exceptions.IllegalMoveException;
 import github.thewinner958.tictactoe.game.services.GameService;
 import github.thewinner958.tictactoe.web.DTOs.GameDto;
+import github.thewinner958.tictactoe.web.DTOs.MoveDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +25,17 @@ public class GameController {
     }
 
     @PostMapping
-    public @ResponseBody GameDto createGame(GameDto dto) {
+    public @ResponseBody GameDto createGame(@RequestBody GameDto dto) {
         return gameService.createGame(dto);
+    }
+
+    @PostMapping("/{id}")
+    public @ResponseBody GameDto setPlayer2(@PathVariable Integer id, @RequestParam(name = "player2") String username) {
+        try {
+            return gameService.setSecondPlayer(id, username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The username provided is not valid or the game already has a player"));
+        } catch (AlreadyHas2ndPlayerException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The game already has a second player");
+        }
     }
 
     @GetMapping
@@ -49,5 +62,31 @@ public class GameController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nothing was found with that id!");
         }
     }
-    // TODO: 06/03/2023 make the move functionality
+
+    @PostMapping("/{id}/moves")
+    public MoveDto makeMove(@PathVariable Integer id, MoveDto body) {
+        if (body.game() == null) {
+            GameDto game = getGameById(id);
+            body = new MoveDto(body.id(), game, body.player(), body.boardRow(), body.boardColumn(), body.created());
+        }
+        try {
+            return gameService.makeMove(body);
+        }catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong parameters");
+        } catch (FinishedGameException e) {
+            throw new ResponseStatusException(HttpStatus.ACCEPTED, "The game has finished");
+        } catch (IllegalMoveException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You made wrong move");
+        }
+    }
+
+    @GetMapping("/{id}/moves")
+    public List<MoveDto> getGamesMoves(@PathVariable Integer id) {
+        return gameService.getAllMovesByGameId(id);
+    }
+
+    @GetMapping("/{id}/move")
+    public MoveDto getLatestGameMove(@PathVariable Integer id) {
+        return gameService.getLatestMoveByGameId(id);
+    }
 }
