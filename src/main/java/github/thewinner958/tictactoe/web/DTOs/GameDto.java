@@ -10,5 +10,5 @@ import java.time.Instant;
  * A DTO for the {@link github.thewinner958.tictactoe.data.entities.Game} entity
  */
 public record GameDto(Integer id, PlayerDto player1, PlayerDto player2, GameSetupDto gameSetup, @JsonProperty(access = JsonProperty.Access.READ_ONLY) Instant created,
-                      @JsonProperty(access = JsonProperty.Access.READ_ONLY) Boolean gameStatus, @JsonIgnore String state, @JsonProperty(access = JsonProperty.Access.READ_ONLY) Boolean whoWon) implements Serializable {
+                      @JsonProperty(access = JsonProperty.Access.READ_ONLY) Boolean gameStatus, @JsonProperty(access = JsonProperty.Access.READ_ONLY) String state, @JsonProperty(access = JsonProperty.Access.READ_ONLY) Integer whoWon) implements Serializable {
 }

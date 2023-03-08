@@ -39,7 +39,7 @@ public class Game {
     private String state;
 
     @Column(name = "who_won")
-    private Boolean whoWon;
+    private Integer whoWon;
 
     public Integer getId() {
         return id;
@@ -97,11 +97,11 @@ public class Game {
         this.state = state;
     }
 
-    public Boolean getWhoWon() {
+    public Integer getWhoWon() {
         return whoWon;
     }
 
-    public void setWhoWon(Boolean whoWon) {
+    public void setWhoWon(Integer whoWon) {
         this.whoWon = whoWon;
     }
 }
