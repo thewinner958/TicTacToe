@@ -10,16 +10,14 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring", uses = PlayerService.class, nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
 public interface PlayerMapper {
 
-    @Mappings({@Mapping(target = "isBot"),
-            @Mapping(target = "id"),
+    @Mappings({@Mapping(target = "id"),
             @Mapping(target = "createTime"),
             @Mapping(target = "password")})
     Player toEntity(PlayerDto playerDto);
 
     PlayerDto toDto(Player player);
 
-    @Mappings({@Mapping(target = "isBot"),
-            @Mapping(target = "id"),
+    @Mappings({@Mapping(target = "id"),
             @Mapping(target = "createTime"),
             @Mapping(target = "password")})
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
