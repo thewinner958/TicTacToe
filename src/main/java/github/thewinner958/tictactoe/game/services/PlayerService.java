@@ -5,6 +5,7 @@ import github.thewinner958.tictactoe.data.entities.Player;
 import github.thewinner958.tictactoe.data.repositories.PlayerRepository;
 import github.thewinner958.tictactoe.game.services.mappers.PlayerMapper;
 import github.thewinner958.tictactoe.web.DTOs.PlayerDto;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ import java.util.Optional;
  */
 @Service
 @Transactional
+@CommonsLog
 public class PlayerService {
     private final PlayerRepository repository;
     private final PlayerMapper mapper;

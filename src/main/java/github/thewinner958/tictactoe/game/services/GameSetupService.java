@@ -4,8 +4,10 @@ import github.thewinner958.tictactoe.data.entities.GameSetup;
 import github.thewinner958.tictactoe.data.repositories.GameSetupRepository;
 import github.thewinner958.tictactoe.game.services.mappers.GameSetupMapper;
 import github.thewinner958.tictactoe.web.DTOs.GameSetupDto;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@CommonsLog
+@Transactional
 public class GameSetupService {
     private final GameSetupRepository repository;
     private final GameSetupMapper mapper;

@@ -2,6 +2,7 @@ package github.thewinner958.tictactoe.web;
 
 import github.thewinner958.tictactoe.game.services.PlayerService;
 import github.thewinner958.tictactoe.web.DTOs.PlayerDto;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
+@CommonsLog
 @RequestMapping("players")
 public class PlayerController {
     private final PlayerService playerService;
