@@ -29,7 +29,7 @@ public class GameController {
     @PostMapping
     public @ResponseBody GameDto createGame(@RequestBody GameDto dto) {
         return gameService.createGame(dto);
-    }
+}
 
     @PostMapping("/{id}")
     public @ResponseBody GameDto setPlayer2(@PathVariable Integer id, @RequestParam(name = "player2") String username) {
@@ -53,6 +53,15 @@ public class GameController {
         return gameService.getGameById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found"));
     }
 
+    @GetMapping("/{id}/win")
+    public @ResponseBody void findWin(@PathVariable Integer id) {
+        try {
+            gameService.findWin(id);
+        } catch (FinishedGameException e) {
+            throw new ResponseStatusException(HttpStatus.OK, e.getMessage());
+        }
+    }
+
     @GetMapping("/{id}/state")
     public @ResponseBody String getGamesCurrentState(@PathVariable Integer id) {
         if (id == null) {
@@ -66,7 +75,7 @@ public class GameController {
     }
 
     @PostMapping("/{id}/moves")
-    public MoveDto makeMove(@PathVariable Integer id, MoveDto body) {
+    public MoveDto makeMove(@PathVariable Integer id, @RequestBody MoveDto body) {
         if (body.game() == null) {
             GameDto game = getGameById(id);
             body = new MoveDto(body.id(), game, body.player(), body.boardRow(), body.boardColumn(), body.created());
@@ -74,11 +83,11 @@ public class GameController {
         try {
             return gameService.makeMove(body);
         }catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong parameters");
-        } catch (FinishedGameException e) {
-            throw new ResponseStatusException(HttpStatus.ACCEPTED, "The game has finished");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (IllegalMoveException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You made wrong move");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (FinishedGameException e) {
+            throw new ResponseStatusException(HttpStatus.ACCEPTED, e.getMessage());
         }
     }
 

@@ -11,6 +11,7 @@ import java.time.Instant;
 })
 public class Move {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 

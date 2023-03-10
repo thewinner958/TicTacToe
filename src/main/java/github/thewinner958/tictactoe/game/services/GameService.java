@@ -51,9 +51,10 @@ public class GameService {
 
     private char[][] stateToChar(GameDto game) {
         char[][] state = new char[Math.toIntExact(game.gameSetup().dimension())][Math.toIntExact(game.gameSetup().dimension())];
+        char[] string = game.state().toCharArray();
         for (int i = 0; i < game.gameSetup().dimension(); i++) {
             for (int j = 0; j < game.gameSetup().dimension(); j++) {
-                state[i][j] = game.state().charAt((int) (j * (i * game.gameSetup().dimension())));
+                state[i][j] = string[(int) (j + (i * game.gameSetup().dimension()))];
             }
         }
         return state;
@@ -65,7 +66,6 @@ public class GameService {
             for (int j = 0; j < state.length; j++) {
                 stateBuilder.append(chars[j]);
             }
-            stateBuilder.append("\n");
         }
         return stateBuilder.toString();
     }
@@ -81,24 +81,23 @@ public class GameService {
      * @return the created game
      */
     public GameDto createGame(GameDto dto) {
-        if (dto.gameSetup().id() == null) dto = new GameDto(dto.id(), dto.player1(), dto.player2(), setups.getSetup(1).orElseThrow(), Instant.now(), dto.gameStatus(),dto.state(), dto.whoWon());
-        else dto = new GameDto(dto.id(), dto.player1(), dto.player2(), dto.gameSetup(), Instant.now(), dto.gameStatus(),dto.state(), dto.whoWon());
+        if (dto.gameSetup() == null) dto = new GameDto(dto.id(), dto.player1(), dto.player2(), setups.getSetup(1).orElseThrow(), Instant.now(), false,dto.state(), dto.whoWon());
+        else dto = new GameDto(dto.id(), dto.player1(), dto.player2(), dto.gameSetup(), Instant.now(), false,dto.state(), dto.whoWon());
         GameSetupDto setupDto = setups.getSetup(dto.gameSetup().id()).orElseThrow();
         StringBuilder stateBuilder = new StringBuilder();
         for (int i = 0; i < setupDto.dimension(); i++) {
             for (int j = 0; j < setupDto.dimension(); j++) {
                 stateBuilder.append(setupDto.emptyChar());
             }
-            stateBuilder.append("\n");
         }
         PlayerDto player1 = players.getPlayerByUsername(dto.player1().username()).orElseThrow();
-        if (dto.player2() == null) dto = new GameDto(dto.id(), player1, players.getPlayerById(1).orElseThrow(), setupDto ,dto.created(), dto.gameStatus(), stateBuilder.toString(), null);
+        if (dto.player2() == null) dto = new GameDto(dto.id(), player1, players.getNullPlayer(), setupDto ,dto.created(), dto.gameStatus(), stateBuilder.toString(), null);
         else dto = new GameDto(dto.id(), player1, players.getPlayerByUsername(dto.player2().username()).orElseThrow(), setupDto ,dto.created(), dto.gameStatus(), stateBuilder.toString(), null);
         return mapper.toDto(repository.save(mapper.toEntity(dto)));
     }
 
     /**
-     * A function that lists all games in the db
+     * Lists all games in the db
      * @return list of all games in the db
      */
     public List<GameDto> getAllGames() {
@@ -107,130 +106,160 @@ public class GameService {
          return result.stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
+    /**
+     * Gets the info of a game, provided by an identifier in the db
+     * @param id the identifier in the db
+     * @return the game with the same identifier in {@link Optional} form
+     */
     public Optional<GameDto> getGameById(int id) {
-        findWin(id);
         return repository.findById(id).map(mapper::toDto);
     }
 
+    /**
+     * Gets the current state of the game.
+     * Finds the game with the {@link GameService#getGameById(int id)} method
+     * @param id id of the game
+     * @return the state of the game
+     */
     public String getCurrentState(int id) {
         return getGameById(id).orElseThrow().state();
     }
 
+    /**
+     * Sets up the second player in the game
+     * @param id id of the game
+     * @param username the username of the player
+     * @return the updated game
+     * @throws AlreadyHas2ndPlayerException if the provided game already has a player
+     */
     public Optional<GameDto> setSecondPlayer(int id, String username) throws AlreadyHas2ndPlayerException {
-        if (!getGameById(id).orElseThrow().player2().equals(players.getPlayerById(1).orElseThrow())) throw new AlreadyHas2ndPlayerException(); //Checks if player 2 exists in the game
-        if (username.equals(players.getPlayerById(1).orElseThrow().username())) return Optional.empty(); //Checks if either the username parameter has "null"
+        if (!getGameById(id).orElseThrow().player2().equals(players.getNullPlayer())) throw new AlreadyHas2ndPlayerException(); //Checks if player 2 exists in the game
+        if (username.equals(players.getNullPlayer().username())) return Optional.empty(); //Checks if either the username parameter has "null"
         int success = repository.updatePlayer2ByGameId(players.getMapper().toEntity(players.getPlayerByUsername(username).orElseThrow()), id);
         if (success <= 0) return Optional.empty(); //Checks for success
         return getGameById(id);
     }
 
-    protected Character findWin(int id) {
+    /**
+     * Finds the winner of the game
+     * @param id game id
+     * @throws FinishedGameException with message
+     */
+    public void findWin(int id) throws FinishedGameException {
         GameDto game = getGameById(id).orElseThrow();
-        if (game.gameStatus()) return '1';
+        if (game.gameStatus()) throw new FinishedGameException("Already finished!");
         char[][] state = stateToChar(game);
-        char winSymbol;
-        int countSame;
+        Character winSymbol = null;
+        int countSame = 0;
+        int emptyCount = 0;
         long N = game.gameSetup().dimension();
-        WinnableSequence[] ws = {
-                (int i, int j) -> { // Row sequence
-                    return state[i][j];
-                },
-
-                (int i, int j) -> { // Column sequence
-                    return state[j][i];
-                },
-
-                (int i, int j) -> { // Main diagonal - up
-                    return state[i + j][j];
-                },
-
-                (int i, int j) -> {  // Opposing diagonal - down
-                    return state[j][i + j];
-                },
-
-                (int i, int j) -> { // Main diagonal - up
-                    return state[i - j][j];
-                },
-
-                (int i, int j) -> {// Opposing diagonal - down
-                    return state[(int) (N - j - 1)][i + j];
-                }
-        };
-
-        for (WinnableSequence seq : ws) {
-            for (int i = 0; i < N; i++) {
-                winSymbol = seq.charAt(i, 0);
-                countSame = 0;
-                for (int j = 0; j < N; j++) {
-                    try {
-                        if (seq.charAt(i, j) != game.gameSetup().emptyChar() &&
-                                seq.charAt(i, j) == winSymbol) {
-                            countSame = countSame + 1;
-                        } else {
-                            winSymbol = seq.charAt(i, j);
-                            countSame = 1;
-                        }
-
-                        if (countSame == game.gameSetup().dimension()) {
-                            int success;
-                            if (winSymbol == game.gameSetup().player1Char()) {
-                                success = repository.updateGameStatusAndWhoWonById(true,1, id); //Player 1
-                            } else {
-                                success = repository.updateGameStatusAndWhoWonById(true,2, id); //Player 2
-                            }
-                            if (success > 0) return winSymbol;
-                            else return null;
-                        }
-
-                    } catch (java.lang.ArrayIndexOutOfBoundsException exc) {
-                        break;
-                    }
-                }
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (state[i][j] == game.gameSetup().emptyChar()) emptyCount++;
             }
         }
-        boolean emptyChar = true;
-        for (int i = 0; i < game.state().length(); i++) {
-            emptyChar = game.state().charAt(i) == game.gameSetup().emptyChar();
-            if (emptyChar) break;
+
+        //Row win
+        for (int i = 0; i < N; i++) {
+            char searchSymbol = state[i][0];
+            for (int j = 0; j < N; j++) {
+                if ((state[i][j] == game.gameSetup().player1Char()) || (state[i][j] == game.gameSetup().player2Char()) && state[i][j] == searchSymbol){
+                    countSame++;
+                }
+                if (countSame == game.gameSetup().dimension()) winSymbol = state[i][j];
+            }
+            countSame = 0;
         }
-        if (!emptyChar) {
-            repository.updateGameStatusAndWhoWonById(true, 0, id);
-            return game.gameSetup().emptyChar(); //Draw
+        
+        //Column win
+        for (int i = 0; i < N; i++) {
+            char searchSymbol = state[0][i];
+            for (int j = 0; j < N; j++) {
+                if (state[j][i] == game.gameSetup().player1Char() || state[j][i] == game.gameSetup().player2Char() && state[j][i] == searchSymbol)
+                    countSame++;
+                if (countSame == game.gameSetup().dimension()) winSymbol = state[j][i];
+            }
+            countSame = 0;
         }
-        return null;
+
+        //Main Diagonal Win
+        for (int i = 0; i < N; i++) {
+            char searchSymbol = state[i][0];
+            if (state[i][i] == game.gameSetup().player1Char() || state[i][i] == game.gameSetup().player2Char() && state[i][i] == searchSymbol) countSame++;
+            if (countSame == game.gameSetup().dimension()) winSymbol = state[i][i];
+        }
+        countSame = 0;
+
+        //Opposing diagonal win
+        for (int i = 0; i < N; i++) {
+            char searchSymbol = state[(int) (N - i - 1)][0];
+            if (state[(int) (N - i - 1)][i] == game.gameSetup().player1Char() || state[(int) (N - i - 1)][i] == game.gameSetup().player2Char()) countSame++;
+            if (countSame == game.gameSetup().dimension()) winSymbol = state[(int) (N - i - 1)][i];
+        }
+
+        if (winSymbol == game.gameSetup().player1Char()) {
+            repository.updateGameStatusAndWhoWonById(true, 1, game.id());
+            throw new FinishedGameException("Player 1 wins");
+        } else if(winSymbol == game.gameSetup().player2Char()) {
+            repository.updateGameStatusAndWhoWonById(true, 2, game.id());
+            throw new FinishedGameException("Player 2 wins");
+        }
+
+        if (emptyCount == 0) {
+            repository.updateGameStatusAndWhoWonById(true, 0, game.id());
+            throw new FinishedGameException("Draw");
+        }
     }
 
-    // TODO: 06/03/2023 make the move functionality
+    /**
+     * Gets all moves by the game identifier
+     * @param id game identifier
+     * @return the list of all moves that was made in that game
+     */
     public List<MoveDto> getAllMovesByGameId(int id) {
         return moveRepository.getAllMovesByGameId(id).stream().map(moveMapper::toDto).collect(Collectors.toList());
     }
 
+    /**
+     * Gets the latest move
+     * @param id game identifier
+     * @return the latest move of that game
+     */
     public MoveDto getLatestMoveByGameId(int id) {
+        if (getAllMovesByGameId(id).size() == 0) return null;
         return getAllMovesByGameId(id).get(getAllMovesByGameId(id).size() - 1);
     }
 
+    /**
+     * Make the move in the game
+     * @param moveDto the move dto ({@link MoveDto})
+     * @return the move that was made
+     * @throws IllegalMoveException if the move provided in the dto is either out of bounds or placed in an already used place
+     * @throws FinishedGameException if the game is already finished
+     */
     public MoveDto makeMove(MoveDto moveDto) throws IllegalMoveException, FinishedGameException {
-        Character winSymbol = findWin(moveDto.game().id());
         GameDto gameDto = getGameById(moveDto.game().id()).orElseThrow();
-        if (winSymbol != null || gameDto.gameStatus()) throw new FinishedGameException();
-        if (moveDto.player() == null) throw new IllegalArgumentException();
+        if (gameDto.gameStatus()) throw new FinishedGameException("game is finished");
+        if (moveDto.player() == null) throw new IllegalArgumentException("player was not set");
+        if (getAllMovesByGameId(moveDto.game().id()).size() == 0 && !moveDto.player().username().equals(gameDto.player1().username())) throw new IllegalMoveException("he is not player 1");
         if (moveDto.boardRow() >= moveDto.game().gameSetup().dimension() || moveDto.boardColumn() >= moveDto.game().gameSetup().dimension() ||
-        moveDto.boardRow() < 0 || moveDto.boardColumn() < 0) throw new IllegalMoveException();
-        if (moveDto.player().username().equals(getLatestMoveByGameId(moveDto.game().id()).player().username())) {
-            throw new IllegalArgumentException();
+        moveDto.boardRow() < 0 || moveDto.boardColumn() < 0) throw new IllegalMoveException("out of bounds");
+        if (getLatestMoveByGameId(moveDto.game().id()) != null && moveDto.player().username().equals(getLatestMoveByGameId(moveDto.game().id()).player().username())) {
+            throw new IllegalMoveException("player already played");
         }
         char[][] state = stateToChar(gameDto);
         if (state[Math.toIntExact(moveDto.boardRow())][Math.toIntExact(moveDto.boardColumn())] != gameDto.gameSetup().emptyChar())
-            throw new IllegalMoveException();
+            throw new IllegalMoveException("Only put in an empty space");
         if (moveDto.player().username().equals(gameDto.player1().username())) {
             state[Math.toIntExact(moveDto.boardRow())][Math.toIntExact(moveDto.boardColumn())] = gameDto.gameSetup().player1Char();
-        } else {
+        } else if (moveDto.player().username().equals(gameDto.player2().username())){
             state[Math.toIntExact(moveDto.boardRow())][Math.toIntExact(moveDto.boardColumn())] = gameDto.gameSetup().player2Char();
         }
         int success = repository.updateGameState(stateFromChar(state), moveDto.game().id());
         if (success <= 0) {
             return null;
         }
+        moveDto = new MoveDto(moveDto.id(), gameDto, players.getPlayerByUsername(moveDto.player().username()).orElseThrow(), moveDto.boardRow(), moveDto.boardColumn(), Instant.now());
         return moveMapper.toDto(moveRepository.save(moveMapper.toEntity(moveDto)));
     }
 }

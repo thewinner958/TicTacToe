@@ -44,6 +44,7 @@ public class PlayerService {
         for (Player player : repository.findAll()) {
             result.add(mapper.toDto(player));
         }
+        result.remove(0);
         return result;
     }
 
@@ -70,5 +71,9 @@ public class PlayerService {
 
     protected PlayerMapper getMapper() {
         return mapper;
+    }
+
+    protected PlayerDto getNullPlayer() {
+        return mapper.toDto(repository.findById(1).orElseThrow());
     }
 }

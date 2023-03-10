@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface GameRepository extends CrudRepository<Game, Integer> {
+    Game findByPlayer1_Username(String username);
     @Transactional
     @Modifying
     @Query("update Game g set g.state = ?1 where g.id = ?2")
