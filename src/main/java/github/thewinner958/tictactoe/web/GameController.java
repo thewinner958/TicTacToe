@@ -6,6 +6,7 @@ import github.thewinner958.tictactoe.game.exceptions.IllegalMoveException;
 import github.thewinner958.tictactoe.game.services.GameService;
 import github.thewinner958.tictactoe.web.DTOs.GameDto;
 import github.thewinner958.tictactoe.web.DTOs.MoveDto;
+import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
+@CommonsLog
 @RequestMapping("games")
 public class GameController {
     private final GameService gameService;
