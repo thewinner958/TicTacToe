@@ -201,7 +201,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"\",\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
+							"raw": "{\r\n    \"username\": \"viper\",\r\n    \"email\": \"vipe@playvalorant.com\",\r\n    \"password\": \"welcometomyworld\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -417,7 +417,489 @@
 		},
 		{
 			"name": "Game API",
-			"item": [],
+			"item": [
+				{
+					"name": "Create a game",
+					"id": "206fcf38-0820-477e-89f8-60cb6cc84070",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"player1\": {\r\n        \"username\": \"riftwalker\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/games",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"games"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "a0c45bf3-5791-44f0-934e-8a85dc8b6f40",
+							"name": "Create a game",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"player1\": {\r\n        \"username\": \"viper\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/games",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"games"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 08 Mar 2023 22:35:51 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"player1\": {\n        \"id\": 2,\n        \"username\": \"viper\",\n        \"email\": \"vipe@playvalorant.com\",\n        \"createTime\": \"2023-03-08T22:11:44Z\"\n    },\n    \"player2\": {\n        \"id\": 1,\n        \"username\": \"null\",\n        \"email\": \"null\",\n        \"createTime\": \"2023-03-08T12:43:08Z\"\n    },\n    \"gameSetup\": {\n        \"id\": 1,\n        \"player1Char\": \"X\",\n        \"player2Char\": \"O\",\n        \"emptyChar\": \"_\",\n        \"dimension\": 3\n    },\n    \"created\": \"2023-03-08T22:35:51.215542300Z\",\n    \"gameStatus\": false,\n    \"whoWon\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all games",
+					"id": "a57b6135-5bd3-42b1-968b-42aa50953036",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/games",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"games"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "e6371802-c43e-424f-976e-806881390b8e",
+							"name": "Get all games",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/games",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"games"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 08 Mar 2023 22:26:04 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"player1\": {\n            \"id\": 2,\n            \"username\": \"viper\",\n            \"email\": \"vipe@playvalorant.com\",\n            \"createTime\": \"2023-03-08T22:11:44Z\"\n        },\n        \"player2\": {\n            \"id\": 1,\n            \"username\": \"null\",\n            \"email\": \"null\",\n            \"createTime\": \"2023-03-08T12:43:08Z\"\n        },\n        \"gameSetup\": {\n            \"id\": 1,\n            \"player1Char\": \"X\",\n            \"player2Char\": \"O\",\n            \"emptyChar\": \"_\",\n            \"dimension\": 3\n        },\n        \"created\": \"2023-03-08T22:23:01Z\",\n        \"gameStatus\": false,\n        \"state\": \"___\\n___\\n___\\n\",\n        \"whoWon\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get game by ID",
+					"id": "21368b45-0000-4d75-bc00-4516e853d851",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/games/6",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"games",
+								"6"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "bf38336f-5a51-4a4e-82db-b5fcbec59ffb",
+							"name": "Get game by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/games/3",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"games",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 08 Mar 2023 22:50:28 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"player1\": {\n        \"id\": 2,\n        \"username\": \"viper\",\n        \"email\": \"vipe@playvalorant.com\",\n        \"createTime\": \"2023-03-08T22:11:44Z\"\n    },\n    \"player2\": {\n        \"id\": 1,\n        \"username\": \"null\",\n        \"email\": \"null\",\n        \"createTime\": \"2023-03-08T12:43:08Z\"\n    },\n    \"gameSetup\": {\n        \"id\": 1,\n        \"player1Char\": \"X\",\n        \"player2Char\": \"O\",\n        \"emptyChar\": \"_\",\n        \"dimension\": 3\n    },\n    \"created\": \"2023-03-08T22:35:51Z\",\n    \"gameStatus\": false,\n    \"whoWon\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Set second player",
+					"id": "fa0ae80b-9a89-4f0c-a995-a39d70d0c5a1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/games/6?player2=viper",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"games",
+								"6"
+							],
+							"query": [
+								{
+									"key": "player2",
+									"value": "viper",
+									"description": "the username of the second player"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "583784c3-e06a-4eec-b774-8d0039f9d6b5",
+							"name": "Set second player",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/games/6?player2=viper",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"games",
+										"6"
+									],
+									"query": [
+										{
+											"key": "player2",
+											"value": "viper",
+											"description": "the username of the second player"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 Mar 2023 11:50:07 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"player1\": {\n        \"id\": 3,\n        \"username\": \"riftwalker\",\n        \"email\": \"riftwalker@example.com\",\n        \"createTime\": \"2023-03-09T09:35:40Z\"\n    },\n    \"player2\": {\n        \"id\": 1,\n        \"username\": \"null\",\n        \"email\": \"null\",\n        \"createTime\": \"2023-03-08T12:43:08Z\"\n    },\n    \"gameSetup\": {\n        \"id\": 1,\n        \"player1Char\": \"X\",\n        \"player2Char\": \"O\",\n        \"emptyChar\": \"_\",\n        \"dimension\": 3\n    },\n    \"created\": \"2023-03-09T11:49:14Z\",\n    \"gameStatus\": false,\n    \"whoWon\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Get current state",
+					"id": "090ba71b-6530-4816-bf4d-8433252f9eaa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/games/6/state",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"games",
+								"6",
+								"state"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "616bd433-22be-463f-a6fa-d1703285e6ce",
+							"name": "Get current state",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/games/3/state",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"games",
+										"3",
+										"state"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain;charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "12"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 08 Mar 2023 23:06:30 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "___\n___\n___\n"
+						}
+					]
+				},
+				{
+					"name": "Make a move",
+					"id": "bc4c013b-a7ae-442e-a49b-bb8cd1823263",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"player\": {\r\n        \"username\": \"riftwalker\"\r\n    },\r\n    \"boardRow\" : 0,\r\n    \"boardColumn\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/games/6/moves",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"games",
+								"6",
+								"moves"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "7ab26d4f-1a38-403c-bc70-a4945f010b75",
+							"name": "Make a move",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"player\": {\r\n        \"username\": \"viper\"\r\n    },\r\n    \"boardRow\" : 0,\r\n    \"boardColumn\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/games/3/moves",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"games",
+										"3",
+										"moves"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 Mar 2023 07:13:07 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"game\": {\n        \"id\": 3,\n        \"player1\": {\n            \"id\": 2,\n            \"username\": \"viper\",\n            \"email\": \"vipe@playvalorant.com\",\n            \"createTime\": \"2023-03-08T22:11:44Z\"\n        },\n        \"player2\": {\n            \"id\": 3,\n            \"username\": \"riftwalker\",\n            \"email\": \"riftwalker\",\n            \"createTime\": \"2023-03-08T22:53:32Z\"\n        },\n        \"gameSetup\": {\n            \"id\": 1,\n            \"player1Char\": \"X\",\n            \"player2Char\": \"O\",\n            \"emptyChar\": \"_\",\n            \"dimension\": 3\n        },\n        \"created\": \"2023-03-08T22:35:51Z\",\n        \"gameStatus\": false,\n        \"whoWon\": null\n    },\n    \"player\": {\n        \"id\": 2,\n        \"username\": \"viper\",\n        \"email\": \"vipe@playvalorant.com\",\n        \"createTime\": \"2023-03-08T22:11:44Z\"\n    },\n    \"boardRow\": 0,\n    \"boardColumn\": 1,\n    \"created\": \"2023-03-09T07:13:07.047351200Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Find win",
+					"id": "e9744593-1df9-4d95-8097-b6782a099888",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/games/6/win",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"games",
+								"6",
+								"win"
+							]
+						}
+					},
+					"response": []
+				}
+			],
 			"id": "7ef37c2e-6b63-49bf-8f37-0eeae7fbdf76"
 		},
 		{
@@ -825,11 +1307,6 @@
 				}
 			],
 			"id": "e0fc9473-a214-4b19-a245-31f57d200522"
-		},
-		{
-			"name": "Move API",
-			"item": [],
-			"id": "6a0be161-13bb-4ed2-844d-752801c78df9"
 		}
 	]
 }
