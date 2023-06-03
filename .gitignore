@@ -97,3 +97,5 @@ out/
 /lib/groovy-xml-4.0.2.jar
 /lib/groovy-xml-4.0.2-sources.jar
 /logs/
+
+.fake
